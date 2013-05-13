@@ -182,7 +182,7 @@ char *TANKDIR;
     self.effect.transform.modelviewMatrix = ret.modelviewMatrix;
  }
 
-#if 0
+#if 1
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSTimeInterval  timestamp = event.timestamp;
     switch(event.type)
@@ -198,12 +198,12 @@ char *TANKDIR;
                 switch(subtype)
                 {
                 default:
-                mytouch(timestamp); break;
+                mytouch(); break;
                 }
             }
             break;
-        case UIEventTypeMotion: mymotion(timestamp); break;
-        case UIEventTypeRemoteControl: myremote(timestamp); break;
+        case UIEventTypeMotion: break;
+        case UIEventTypeRemoteControl: break;
     }
 }
 #endif
@@ -273,7 +273,7 @@ char *TANKDIR;
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], [gestureRecognizer rotation]);
+//        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], [gestureRecognizer rotation]);
         [gestureRecognizer setRotation:0];
     }
 }
@@ -307,8 +307,7 @@ char *TANKDIR;
         }
         else
         {
-            NSTimeInterval  timestamp = 0;
-            mytouch(timestamp);
+            mytouch();
         }        
         return NO;
     }

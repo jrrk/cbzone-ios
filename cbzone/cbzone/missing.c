@@ -287,7 +287,7 @@ void myaccel(float acceleration_x, float acceleration_y)
     myhead = (myhead+1)&255;
 }
 
-void mytouch(NSTimeInterval timestamp)
+void mytouch(void)
 {
     myevent[myhead].type = ButtonPress;
     myevent[myhead].xbutton.x = myposn.x;
@@ -299,16 +299,6 @@ void mytouch(NSTimeInterval timestamp)
     myevent[myhead].xbutton.y = myposn.y;
     myevent[myhead].xbutton.button = 1;
     myhead = (myhead+1)&255;
-}
-
-void mymotion(NSTimeInterval timestamp)
-{
-    
-}
-
-void myremote(NSTimeInterval timestamp)
-{
-    
 }
 
 int XPending(
