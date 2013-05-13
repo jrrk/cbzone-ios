@@ -111,14 +111,19 @@ int deadcount, i, icheck, position[2];
 int nummissile = 0;
 int missilecount = 0;
 int nextmissile = 1200;
-int numleft = 3;
 int practise = 0;
 long score = 0;
 long scorebase = 0;
+#if 1
+int numleft = 3;
+Bool dead = False;
+#else
+int numleft = 0;
+Bool dead = True;
+#endif
 Bool new_salvo_flag, new_sight_flag, event, tank_stranded;
 Bool aligned = False;
 // Bool blocked_flag = False;
-Bool dead = False;
 Bool first = True;
 Bool firstmissile = True;
 Bool keylast = True;
@@ -159,7 +164,7 @@ void cbzone_main(
 #ifdef WIN32
      return;
 #else //X11
-     exit(1);
+     myexit(1);
 #endif
   }
 
@@ -210,7 +215,7 @@ void cbzone_while(void)
     if (GetAsyncKeyState( VK_F1 ) < 0) {
       free(o);
       return;
-//      exit(scores(score));  //HACK OUT by Eric Fogelin
+//      myexit(scores(score));  //HACK OUT by Eric Fogelin
     }
 #endif
     gettimeofday(&tstart, 0);
@@ -220,7 +225,7 @@ void cbzone_while(void)
     if (event && key == 'Q') {
       free(o);
       return;
-//      exit(scores(score));  //HACK OUT by Eric Fogelin
+//      myexit(scores(score));  //HACK OUT by Eric Fogelin
     }
 
     if (event && key == 'R') {
@@ -325,7 +330,7 @@ void cbzone_while(void)
 #ifdef WIN32
           return;
 #else //X11
-          exit(1);
+          myexit(1);
 #endif
         }
 
@@ -667,7 +672,7 @@ void cbzone_while(void)
 #ifdef WIN32
           return;
 #else //X11
-          exit(1);
+          myexit(1);
 #endif
         }
       g->attr &= ~(ERASE | EXERASE);
@@ -721,7 +726,7 @@ void cbzone_while(void)
 #ifdef WIN32
           return;
 #else //X11
-          exit(scores(score));
+          myexit(scores(score));
 #endif
         }
         if (missilerun) {

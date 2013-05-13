@@ -13,7 +13,8 @@
  * since the execl will block on tty output.  To allow this we create
  * yet another flag that specifies that motd is not to be read.
  */
-
+
+#if 0
 int pager(file)
      char* file;
 {
@@ -49,7 +50,7 @@ int pager(file)
   }
   return 0;
 }
-
+#endif
 int getoptionint(s)
      char *s;
 {
@@ -59,7 +60,7 @@ int getoptionint(s)
   if (sscanf(s, "%d%s", &num, rest) != 1) {
     printf("Error in optional argument %s; use -help for help.\n",
            s);
-    exit(0);
+    myexit(0);
   }
   return(num);
 }
@@ -83,7 +84,7 @@ void parseopt(argc, argv, status)
      Bool status;
 {
   int i;
-  Bool early_exit = False;
+  Bool early_myexit = False;
 
   static char* optionnames[] = {
     "-xrm", "-delay", "-blocks", "-landers", "-tanks", "-missiles",
@@ -168,8 +169,9 @@ void parseopt(argc, argv, status)
 #endif //X11
 
   if (opt->scores || opt->help || opt->version)
-    early_exit = True;
-
+    early_myexit = True;
+    
+#if 0
   if (opt->output) {
     pager("cbzone.motd");
 
@@ -182,12 +184,13 @@ void parseopt(argc, argv, status)
     if (opt->help && pager("cbzone.help"))
       printf("Sorry help information not available.\n");
   }
-
-  if (early_exit)
+#endif
+    
+  if (early_myexit)
 #ifdef WIN32
      return;
 #else //X11
-    exit(0);
+    myexit(0);
 #endif
 
   if (!status)
@@ -215,7 +218,7 @@ void parseopt(argc, argv, status)
 #ifdef WIN32
      return;
 #else //X11
-     exit(1);
+     myexit(1);
 #endif
   }
 

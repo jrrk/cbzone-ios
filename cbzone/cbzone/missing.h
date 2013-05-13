@@ -6623,11 +6623,11 @@ extern Boolean XtToolkitThreadInitialize(
     void
 );
 
-extern void XtAppSetExitFlag(
+extern void XtAppSetmyexitFlag(
     XtAppContext	
 );
 
-extern Boolean XtAppGetExitFlag(
+extern Boolean XtAppGetmyexitFlag(
     XtAppContext	
 );
 
@@ -7775,3 +7775,7 @@ extern WidgetClass transientShellWidgetClass;
 extern WidgetClass topLevelShellWidgetClass;
 extern WidgetClass applicationShellWidgetClass;
 extern WidgetClass sessionShellWidgetClass;
+
+extern Screen _s[1];
+extern Visual _v[1];
+

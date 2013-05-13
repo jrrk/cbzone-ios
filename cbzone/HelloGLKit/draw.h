@@ -28,6 +28,7 @@
 #include <GLKit/GLKEffects.h>
 #include <Foundation/NSDate.h>
 #else
+
 extern CGContextRef UIGraphicsGetCurrentContext(void);
 
 // if not objc, cannot use above because of inadequate guarding in header file so pasted here
@@ -59,17 +60,16 @@ extern GLuint _vertexBuffer;
 extern GLuint _indexBuffer;
 
 extern float _rotation;
-extern CGSize bsize;
+extern int exited;
+extern char *TANKDIR;
+//extern float offx, offy, magx, magy;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-up_gl_t updateGL(CGRect bounds, NSTimeInterval timeSinceLastUpdate);
+void resetdraw(void);
+up_gl_t updateGL(CGRect bounds, CGPoint center);
 void drawLine(float x1, float y1, float x2, float y2, float red, float green, float blue, float alpha);
 void drawLineRel(float x1, float y1, float x2, float y2, unsigned long drawforeground);
 void drawBg(CGRect bounds);
-void drawFg(CGRect bounds);
+void drawFg(CGRect bounds, CGPoint center);
 void glSetup(CGRect bounds);
 void cbzone_main(int argc, const char* const argv[]);
 void cbzone_while(void);
@@ -80,9 +80,7 @@ void mymotion(NSTimeInterval timestamp);
 void myremote(NSTimeInterval timestamp);
 void myaccel(float acceleration_x, float acceleration_y);
 void init_event(void);
-
-#ifdef __cplusplus
-};
-#endif
+void staticscore();
+void msgrefresh(void);
 
 #endif

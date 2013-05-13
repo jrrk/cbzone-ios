@@ -58,7 +58,7 @@ void placeobjects(o, missilerun, score)
 #ifdef WIN32
       return;
 #else //X11
-      exit(1);
+      myexit(1);
 #endif
     }
 
@@ -141,7 +141,7 @@ void placeobjects(o, missilerun, score)
 #ifdef WIN32
       return;
 #else //X11
-      exit(1);
+      myexit(1);
 #endif
     }
 

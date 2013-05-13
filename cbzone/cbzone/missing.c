@@ -472,6 +472,10 @@ XtAppContext XtCreateApplicationContext()
     return a;
 }
 
+static Display _d;
+Screen _s[1];
+Visual _v[1];
+
 Display *XtOpenDisplay(
                               XtAppContext 	arg1,
                               __const char*	arg2,
@@ -483,24 +487,20 @@ Display *XtOpenDisplay(
                               char**		arg8
                               )
 {
-        static Screen s[1];
-        static Display d;
-        static Visual v[1];
-        d.screens = s;
-        d.nscreens = 1;
-        s->root_visual = v;
-        s->root_depth = 8;
-        s->height = bsize.height;
-        s->width = bsize.width;
-        v->map_entries = 256;
-        v->vclass = TrueColor;
-        v->visualid = 34;
-        v->red_mask = 0xFF0000;
-        v->green_mask = 0xFF00;
-        v->blue_mask = 0xFF;
-        v->bits_per_rgb = 8;
-    
-        return &d;
+    _s->root_visual = _v;
+    _s->root_depth = 8;
+    _s->width = 1000;
+    _s->height = 710;
+    _v->map_entries = 256;
+    _v->vclass = TrueColor;
+    _v->visualid = 34;
+    _v->red_mask = 0xFF0000;
+    _v->green_mask = 0xFF00;
+    _v->blue_mask = 0xFF;
+    _v->bits_per_rgb = 8;
+    _d.screens = _s;
+    _d.nscreens = 1;
+        return &_d;
     }
 
 int XFreeColors(
@@ -683,7 +683,7 @@ int XClearWindow(
                  Window     arg2
                  )
 {
- //       mNode->clear();
+    resetdraw();
     return 0;
 }
 

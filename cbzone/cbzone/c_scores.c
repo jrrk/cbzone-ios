@@ -81,7 +81,7 @@ long scores(score)
   } player, *current, *top_score, *prev_score;
 
   FILE *sfile;
-  char buf[100];
+  char buf[200];
   char version[100];
   char *login, *getlogin();
   int i;
@@ -328,8 +328,10 @@ long scores(score)
   (void) signal(SIGINT, SIG_DFL);
   (void) signal(SIGHUP, SIG_DFL);
 
-  if (!scoresonly)
+#if 0
+    if (!scoresonly)
     printandwait("Press any key when ready...", 0);
-
+#endif
+    
   return 0;
 }

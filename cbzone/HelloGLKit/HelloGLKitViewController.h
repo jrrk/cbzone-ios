@@ -8,7 +8,7 @@
 
 #import <GLKit/GLKit.h>
 
-@interface HelloGLKitViewController : GLKViewController
+@interface HelloGLKitViewController : GLKViewController <UIGestureRecognizerDelegate>
 
 -(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
 

@@ -292,7 +292,7 @@ void scanner(o)
 #ifdef WIN32
       return;
 #else //X11
-      exit(1);
+      myexit(1);
 #endif
     }
     init = False;

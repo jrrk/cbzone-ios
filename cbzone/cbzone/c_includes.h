@@ -24,7 +24,6 @@
 #define X11
 #include "draw.h"
 #include "missing.h"
-#define TANKDIR "."
 
 typedef int Bool;
 

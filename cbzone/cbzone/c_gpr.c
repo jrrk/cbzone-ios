@@ -543,7 +543,7 @@ void gprinqconfig(
                          argc, argv)) == NULL) {
     parseopt(*argc, argv, False);
     printf("can't open display! bye.\n");
-    exit(0);
+    myexit(0);
   }
   cbzone = XtAppCreateShell("cbzone", "Cbzone",
                             applicationShellWidgetClass, d, NULL, 0);
