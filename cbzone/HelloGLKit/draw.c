@@ -36,8 +36,7 @@ void resetdraw(void)
 up_gl_t updateGL(CGRect bounds, CGPoint center)
 {
     up_gl_t ret;
-    float aspect = fabsf(bounds.size.width / bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(1.0f, aspect, 1.0f, 0.0f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(1.0f, 1.0f, 1.0f, 0.0f);
     GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(-0.5f, 0.5f, -1.0f);
     
     ret.projectionMatrix = projectionMatrix;

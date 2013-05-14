@@ -174,7 +174,11 @@ Window XCreateSimpleWindow(
                            unsigned int	arg7,
                            unsigned long	arg8,
                            unsigned long	arg9
-                           ) { static Window w; return w; }
+                           )
+{
+    static Window w;
+    return w;
+}
 
 extern Pixmap XCreatePixmapFromBitmapData(
                                           Display*		arg1,
@@ -749,6 +753,7 @@ void XtGetApplicationResources(
      memcpy(opt->cname, cname, sizeof cname);
      memset(opt->cpi, 0, sizeof(opt->cpi));
      opt->mono = 0;
+     //     opt->fullscreen = 0;
      opt->fullscreen = 1;
      opt->defaultcolormap = 0;
      opt->fading_colors = 0;

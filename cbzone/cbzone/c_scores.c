@@ -42,10 +42,8 @@
  */
 
 extern int errno;
-int x, y, ydelta;
-
-
-void xprintf(s, output)                 /* print to the X screen */
+static int x, y, ydelta;
+static void p(s, output)                 /* print to the X screen */
      char* s;
      Bool output;
 {
@@ -53,23 +51,6 @@ void xprintf(s, output)                 /* print to the X screen */
   y += ydelta;
 }
 
-void nprintf(s, output)                 /* print to the parent tty   */
-     char* s;
-     Bool output;
-{
-  if (output)
-    printf("%s\n", s);
-}
-
-void printandwait(s, c)                 /* print a string and then */
-     char* s;                           /* wait for a character c  */
-     char c;                            /* to be pressed.  If c==0 */
-{                                       /* then any keypress will  */
-  y += ydelta;                          /* do.                     */
-  xprintf(s, True);
-  waitforkey(c);
-}
-
 long scores(score)
      long score;
 {
@@ -82,142 +63,36 @@ long scores(score)
 
   FILE *sfile;
   char buf[200];
-  char version[100];
   char *login, *getlogin();
   int i;
-  Font fontid;
   int numgame = 0;
   int numscore = 0;
-  int numscoreable = 0;
   int player_scores = 0;
-  int tries = MAX_RETRIES;
   Bool score_printed = False;
   Bool scoresonly = False;
   Bool wrong_version = False;
-  Bool file_readable = False;
-  Bool file_writeable = False;
   Bool practice = opt->practice;
   struct passwd* pw;
-  void (*p)();
-
-  version[0] ='\0';
-  if (score < 0) {
-    practice = True;
-    scoresonly = True;
-    p = nprintf;
-  }
-  else {
-    p = xprintf;
-    gprsetclippingactive(False);
-    fontid = gprloadfontfile(GAMEOVERFONT);
-    gprsettextfont(fontid);
-    printstring (165, 300, "GAME OVER", 9);
-    fontid = gprloadfontfile(GENERALFONT);
-    gprsettextfont(fontid);
-    printstring (165, 320, "1986 JSR", 8);
-    flushwindow();
-    sleep(1);
-    clearentirescreen();
-  }
 
   x = 350;
   y = 100;
-  ydelta = 15;
+    ydelta = 25;
 
-  sprintf(buf,"%s%s",TANKDIR,SCOREFILE);
-  sfile = fopen(buf,"r");       /* just check if it is there */
-
-  if (sfile == NULL) {
-    p("Score file not readable.", opt->output);
-    if (scoresonly)
-      return 1;
-    else {
-      p("Will try and create new scorefile.", opt->output);
-    }
-  }
-  else
-    file_readable = True;
-
-  if (!scoresonly) {
-    (void) signal(SIGINT, SIG_IGN); /* no leaving this routine */
-    (void) signal(SIGHUP, SIG_IGN); /* no how, no way */
-    file_writeable = True;
-    if (sfile != NULL)
-      fclose(sfile);
-
-  retry:
-    if (file_readable)
-      sfile = fopen(buf,"r+");  /* okay, now open for update */
-    else
-      sfile = fopen(buf,"w");
-
-    if (sfile != NULL) {
-      if (flock(fileno(sfile),LOCK_EX) < 0) {
-        if (errno == EWOULDBLOCK && AFS) {
-          fclose(sfile);
-          sleep(AFS_SLEEP);
-          if (tries--)
-            goto retry;
-        }
-        p("File not lockable, scores will not be saved.", opt->output);
-        file_writeable = False;
-      }
-    }
-    else {
-      p("File not writeable, scores will not be saved.", opt->output);
-      file_writeable = False;
-    }
-
-    /* okay, it's possible we could have closed the file and never
-     * reopened it.  Also, we just may not have been able to lock
-     * it.  In either case, lets close it again and then open only
-     * for reading.
-     */
-    if (file_readable && !file_writeable) {
-      if (sfile != NULL)
-        fclose(sfile);
-      if ((sfile = fopen(buf, "r")) == NULL)
-        file_readable = False;
-    }
-  }
-
-  if (!file_readable && !file_writeable) {
-    p("Scorefile not readable or writeable...Goodbye!", opt->output);
-    (void) signal(SIGINT, SIG_DFL); /* this would probably happen */
-    (void) signal(SIGHUP, SIG_DFL); /* on exit anyway             */
-    if (!scoresonly)
-//      printandwait("Press any key to continue...", 0);
-    return 1;
-  }
-
-  if (file_readable) {
-    if(fgets(version,200,sfile) && file_writeable) {
-      version[strlen(version)-1] = '\0'; /* strip the newline */
-      if (strcmp(version,VERSION)) {
-        wrong_version = True;
-        p("Incorrect version played for this scorefile.", opt->output);
-        p("Score not valid for inclusion.", opt->output);
-        sprintf(buf,"Your version is \"%s\", while",VERSION);
-        p(buf, opt->output);
-        sprintf(buf, "  the scorefile version is \"%s\"", version);
-        p(buf, opt->output);
-      }
-    }
-
-    if (*version == '\0')
-      strcpy(version,VERSION);
-
-    if(fgets(buf,200,sfile))
-      sscanf(buf,"%d %d",&numgame,&numscoreable);
+    
     top_score = (struct score_struct*) malloc(sizeof(struct score_struct));
     current = top_score;
+    
+  sprintf(buf,"%s%s",TANKDIR,SCOREFILE);
+  sfile = fopen(buf,"r+");       /* just check if it is there */
 
+  if (sfile == NULL)
+      sfile = fopen(buf,"w");
+   else
     while(fgets(buf,200,sfile) && numscore < NUMHIGH)
-      if (sscanf(buf,"%d %d %[^\n]",&current->score,
-                 &current->uid,current->name) != 3) {
-        p("Invalid line in score file...Skipping.", opt->output);
-      }
-      else {
+    {
+      if (sscanf(buf,"%ld %d %[^\n]",&current->score,
+                 &current->uid,current->name) == 3)
+      {
         current->next = (struct score_struct*)
           malloc(sizeof(struct score_struct));
         prev_score = current;
@@ -231,9 +106,6 @@ long scores(score)
   else
     top_score = NULL;
 
-  if (numgame < numscoreable)
-    numgame = numscoreable;
-
   if (!scoresonly) {
     /* try to get it from the passwd file first, just in case this
      * person su'd from another acct.
@@ -245,13 +117,7 @@ long scores(score)
       if ((login = getlogin()) != NULL)
         strcpy(player.name, login);
       else {
-        p("Can't find out who you are....bye.", opt->output);
-        fclose(sfile);
-        (void) signal(SIGINT, SIG_DFL);
-        (void) signal(SIGHUP, SIG_DFL);
-        if (!scoresonly)
-          printandwait("Press any key to continue...", 0);
-        return 1;
+          strcpy(player.name, "Anon");
       }
     else
       strcpy(player.name, pw->pw_name);
@@ -273,20 +139,16 @@ long scores(score)
     }
 
     numgame++;
-    if (!practice && !wrong_version)
-      numscoreable++;
   }
 
-  sprintf(buf, "High scores after %d games, %d scoreable:",
-          numgame, numscoreable);
-  p(buf, opt->output);
+  p("GAME OVER - high scores", opt->output);
   current = top_score;
   while (current != NULL) {
     if (current == &player)
       *buf = '>';
     else
       *buf = ' ';
-    sprintf(buf+1, "%-20s %8d", current->name, current->score);
+    sprintf(buf+1, "%-20s %8ld", current->name, current->score);
     p(buf, opt->output);
 
     if (((wrong_version || practice) && current==&player) ||
@@ -305,33 +167,17 @@ long scores(score)
 
   if (!scoresonly && !score_printed) {
     p("...", opt->output);
-    sprintf(buf, ">%-20s %8d", player.name,player.score);
+    sprintf(buf, ">%-20s %8ld", player.name,player.score);
     p(buf, opt->output);
   }
 
-  if (file_writeable) {
     rewind(sfile);
-    fprintf(sfile,"%s\n",version);
-    fprintf(sfile,"%d %d\n",numgame,numscoreable);
     for(current = top_score, i = 0;
         current != NULL && i < NUMHIGH;
         current = current->next, i++)
-      fprintf(sfile,"%d %d %s\n",current->score,current->uid,current->name);
-    if (practice) {
-      y += ydelta;
-      p("Your game was for practice only...", opt->output);
-      p("For a valid score use:  cbzone [-q] [-d 0-5]", opt->output);
-    }
-  }
-
+      fprintf(sfile,"%ld %d %s\n",current->score,current->uid,current->name);
+ 
   fclose(sfile);
-  (void) signal(SIGINT, SIG_DFL);
-  (void) signal(SIGHUP, SIG_DFL);
-
-#if 0
-    if (!scoresonly)
-    printandwait("Press any key when ready...", 0);
-#endif
     
   return 0;
 }
