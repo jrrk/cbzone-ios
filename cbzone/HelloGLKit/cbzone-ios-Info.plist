@@ -11,6 +11,8 @@
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>114px-Chall2_2003.png</string>
+		<string>72px-Chall2_2003.png</string>
+		<string>144px-Chall2_2003.png</string>
 		<string>57px-Chall2_2003.png</string>
 	</array>
 	<key>CFBundleIcons</key>
@@ -20,12 +22,14 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>114px-Chall2_2003.png</string>
+				<string>72px-Chall2_2003.png</string>
+				<string>144px-Chall2_2003.png</string>
 				<string>57px-Chall2_2003.png</string>
 			</array>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>co.uk.kimmitt.cbzone</string>
+	<string>uk.co.kimmitt.cbzone</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
