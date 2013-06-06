@@ -27,8 +27,11 @@ typedef struct {
   int lstart;
   int sstart;
   int bstart;
+  int numleft;
+  int linewidth;
   Bool copters;              /* just helicopters        */
-  Bool loud;                 /* to beep, or not to beep */
+  Bool silent;               /* silence is golden */
+  Bool loud;                 /* use loud sounds */
   Bool practice;             /* valid score?            */
   Bool output;               /* print messages to tty?  */
   Bool scores;
@@ -36,7 +39,9 @@ typedef struct {
   Bool help;
   Bool original;
   Bool cursor;
-
+  Bool training;
+  Bool trails;
+    
   /* Now pick up the color options...pick up the color as a string first */
   /* This will later be a pixel value after we set up the colormap */
   char* cname[MAX_COLORS];

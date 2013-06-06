@@ -22,6 +22,7 @@
 #include <CoreGraphics/CGGeometry.h>
 #include <CoreGraphics/CGContext.h>
 #include <objc/objc.h>
+#include <AudioToolbox/AudioToolbox.h>
 
 #ifdef __OBJC__
 #include <UIKit/UIGraphics.h>
@@ -62,7 +63,23 @@ extern GLuint _indexBuffer;
 extern float _rotation;
 extern int exited;
 extern char *TANKDIR;
-//extern float offx, offy, magx, magy;
+
+typedef enum {
+    senemy_seen,
+    sfire,
+    sgame_begin,
+    sgame_end,
+    skill,
+    smove,
+    smove_blocked,
+    sobject_explodes,
+    ssalvo_fired,
+    suser_died,
+    suser_shoots,
+    slast_sound
+} sound_t;
+
+SystemSoundID soundFileObject[slast_sound];
 
 void resetdraw(void);
 up_gl_t updateGL(CGRect bounds, CGPoint center);
@@ -80,5 +97,8 @@ void myaccel(float acceleration_x, float acceleration_y);
 void init_event(void);
 void staticscore();
 void msgrefresh(void);
+void sound(char *soundName, int soundid);
+void playsound(sound_t);
+void myexit(int);
 
 #endif

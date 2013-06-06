@@ -111,19 +111,12 @@ int deadcount, i, icheck, position[2];
 int nummissile = 0;
 int missilecount = 0;
 int nextmissile = 1200;
-int practise = 0;
 long score = 0;
 long scorebase = 0;
-#if 1
-int numleft = 3;
 Bool dead = False;
-#else
-int numleft = 0;
-Bool dead = True;
-#endif
 Bool new_salvo_flag, new_sight_flag, event, tank_stranded;
 Bool aligned = False;
-// Bool blocked_flag = False;
+Bool blocked_flag = False;
 Bool first = True;
 Bool firstmissile = True;
 Bool keylast = True;
@@ -136,9 +129,6 @@ Bool sight_flag = False;
 struct timeval tstart;
 struct timeval tend;
 long tdiff, limit;
-
-//extern cocos2d::CCDrawNode *mNode;
-//extern HelloWorld *hello;
 
 void cbzone_main(
      int argc,
@@ -171,7 +161,7 @@ void cbzone_main(
   initarray(o);                         /* prepare the main array */
   srandom(time((long *) 0));            /* start things off randomly */
   screeninit();
-  updatedisplay(missilerun, lander, score, numleft, sens, False);
+  updatedisplay(missilerun, lander, score, opt->numleft, sens, False);
   xhairs(aligned);
   gprinqcursor((Position_t *)position);
   event = gprcondeventwait(&key, (Position_t *)position);
@@ -232,7 +222,7 @@ void cbzone_while(void)
       clearentirescreen();
       staticscreen();
       updatedisplay(False, False, -1, 0, False, True);
-      updatedisplay(missilerun, lander, score, numleft, sens, False);
+      updatedisplay(missilerun, lander, score, opt->numleft, sens, False);
       if (sight_flag)
         message(1, False);
       if (pl->attr & IS_BLOCKED)
@@ -262,6 +252,7 @@ void cbzone_while(void)
           s = NULL;
         }
         if (key == 'a' && s!=NULL) {    /* fire up one shot */
+            playsound(opt->loud?sfire:suser_shoots);
           s->attr = START_LIVING;
           s->ecount = 0;
           s->x = pl->x;
@@ -524,9 +515,9 @@ void cbzone_while(void)
                 score += 10000;
                 icheck = score / 100000;
                 if (icheck > scorebase) {
-                  numleft++;
-                  if (numleft > 4)
-                    numleft = 4;
+                  opt->numleft++;
+                  if (opt->numleft > 4)
+                    opt->numleft = 4;
                   scorebase = icheck;
                 }
               }
@@ -562,9 +553,9 @@ void cbzone_while(void)
                   score += 3000;
                 icheck = score / 100000;
                 if (icheck > scorebase) {
-                  numleft++;
-                  if (numleft > 4)
-                    numleft = 4;
+                  opt->numleft++;
+                  if (opt->numleft > 4)
+                    opt->numleft = 4;
                   scorebase = icheck;
                 }
               }
@@ -631,24 +622,27 @@ void cbzone_while(void)
     else if (!sight_flag && new_sight_flag) {
       message(1, False);
       sight_flag = True;
+      playsound(senemy_seen);
     }
-    if (pl->attr & IS_BLOCKED /*&& !blocked_flag*/) {
+    if (pl->attr & IS_BLOCKED && !blocked_flag) {
       message(2, True);
-//      blocked_flag = True;
+      blocked_flag = True;
+      playsound(smove_blocked);
     }
-    else if (!(pl->attr & IS_BLOCKED) /*&& blocked_flag*/) {
+    else if (!(pl->attr & IS_BLOCKED) && blocked_flag) {
       message(-2, False);
-//      blocked_flag = False;
+      blocked_flag = False;
     }
     if (salvo_flag && !new_salvo_flag) {
       message(-3, False);
       salvo_flag = False;
     }
-    else if (!salvo_flag && new_salvo_flag)
+    else if (!salvo_flag && new_salvo_flag) {
       salvo_flag = True;
-
+      playsound(ssalvo_fired);
+    }
     scanner(o);
-    updatedisplay(missilerun, lander, score, numleft, sens, False);
+    updatedisplay(missilerun, lander, score, opt->numleft, sens, False);
     xhairs(aligned);
     drawhorizon(pl->azm);
 
@@ -666,6 +660,8 @@ void cbzone_while(void)
         case IS_LANDER:
         case IS_TANK:
         case IS_SUPER:
+          if (g->ecount == 1)
+              playsound(opt->loud?skill:sobject_explodes);
           explodeobject(g, pl); break;
         default:
           printf("Help! Cannot explode what doesn't exist.\n");
@@ -710,11 +706,13 @@ void cbzone_while(void)
     /* turns, we can start playing again if we have any lives left.  */
 
     if (dead) {
+      if (deadcount == 0)
+          playsound(opt->loud?suser_died:sobject_explodes);
       if (deadcount%5 == 0)
-        drawcracks();
+            drawcracks();
       if (deadcount > 50) {
         dead = False;
-        if (!practise && (numleft-- < 0)) {
+        if (!opt->training && (opt->numleft-- < 0)) {
 #ifdef DEVELOPER
           gettimeofday(&game_end, 0);
           if (opt->output)

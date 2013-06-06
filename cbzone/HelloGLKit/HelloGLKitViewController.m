@@ -8,7 +8,8 @@
 
 #import "HelloGLKitViewController.h"
 #include "draw.h"
-#include "missing.h"
+//#include "missing.h"
+#include "c_includes.h"
 
 char *TANKDIR;
 
@@ -96,6 +97,29 @@ char *TANKDIR;
     
 }
 
+void playsound(sound_t id)
+{
+    if (!opt->silent)
+        AudioServicesPlaySystemSound (soundFileObject[id]);
+}
+
+void sound(char *name, int arg)
+{
+    NSString *soundName = [NSString stringWithUTF8String: name];
+    NSURL *tapSound = [[NSBundle mainBundle] URLForResource: soundName
+                                             withExtension: @"wav"];
+
+    assert(tapSound);
+// Store the URL as a CFURLRef instance
+CFURLRef	soundFileURLRef1 = (CFURLRef) CFBridgingRetain(tapSound);
+
+// Create a system sound object representing the sound file.
+AudioServicesCreateSystemSoundID (
+                                  soundFileURLRef1,
+                                  soundFileObject+arg
+                                  );
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -104,6 +128,46 @@ char *TANKDIR;
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 
     TANKDIR = strdup([[path stringByAppendingString:@"/"] UTF8String] );
+
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    opt->delay = 5;
+    opt->msalvos = -1;
+    opt->menemies = 0;
+    opt->mobjects = 0;
+    opt->estart = 0;
+    opt->lstart = 0;
+    opt->sstart = 0;
+    opt->bstart = 0;
+    opt->output = 1;
+    opt->scores = 0;
+    opt->version = 0;
+    opt->help = 0;
+    opt->original = 0;
+    opt->cursor = 0;
+    opt->copters = [standardDefaults boolForKey:@"copters_preference"];
+    opt->silent = [standardDefaults boolForKey:@"silent_preference"];
+    opt->loud = [standardDefaults boolForKey:@"loud_preference"];
+    opt->trails = [standardDefaults boolForKey:@"trails_preference"];
+    opt->training = [standardDefaults boolForKey:@"practice_preference"];
+    opt->numleft = [standardDefaults integerForKey:@"ownTanks"];
+    opt->mtanks = [standardDefaults integerForKey:@"enemyTanks"];
+    opt->mlanders = [standardDefaults integerForKey:@"enemyLanders"];
+    opt->mmissiles = [standardDefaults integerForKey:@"enemyMissiles"];;
+    opt->mblocks = [standardDefaults integerForKey:@"blocks"];
+    opt->linewidth = [standardDefaults integerForKey:@"lineWidth"];
+    
+    sound("enemy_seen2", senemy_seen);
+    sound("fire", sfire);
+    sound("game_begin", sgame_begin);
+    sound("game_end2", sgame_end);
+    sound("kill", skill);
+    sound("move", smove);
+    sound("move_blocked2", smove_blocked);
+    sound("object_explodes2", sobject_explodes);
+    sound("salvo_fired2", ssalvo_fired);
+    sound("user_died", suser_died);
+    sound("user_shoots2", suser_shoots);
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
 
@@ -142,6 +206,8 @@ char *TANKDIR;
     if ([EAGLContext currentContext] == self.context) {
         [EAGLContext setCurrentContext:nil];
     }
+    for (sound_t i = 0; i < slast_sound; i++)
+        AudioServicesDisposeSystemSoundID (soundFileObject[i]);
     self.context = nil;
 }
 
@@ -301,14 +367,7 @@ char *TANKDIR;
     // if either of the gesture recognizers is the long press, don't allow simultaneous recognition
     if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] || [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
     {
-        if (exited)
-        {
-            //                exit(0);
-        }
-        else
-        {
-            mytouch();
-        }        
+        playsound(skill);
         return NO;
     }
     

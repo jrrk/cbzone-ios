@@ -147,7 +147,6 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
   char text[11];
   static Bool flasher[] = {False, False};
   static int currentnumleft = 0;
-  static int currentscore = -1;
   static int bswitch[] = {918, 612};
   static int blswitch[] = {918, 638};	// Eric Fogelin: added - orig did not work
   static int wind1[][2] = {591, 571, 54, 29};
@@ -171,11 +170,8 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
     flasher[1] = lander;
     bitblt(wind2);
   }
-//  if (score != currentscore) {          /*     change the score      */
-    currentscore = score;
-    sprintf(text,"%10ld",score);  // Eric Fogelin changed this to ld from d
-    printstring(608, 542, text, strlen(text));
-//  }
+  sprintf(text,"%10ld",score);  // Eric Fogelin changed this to ld from d
+  printstring(608, 542, text, strlen(text));
   if (numleft < currentnumleft && numleft >= 0)    /* remove tank(s) */
     while (numleft != currentnumleft)
       removepixmap(4, origin[--currentnumleft]);

@@ -7,9 +7,10 @@
 //
 
 #include <setjmp.h>
-#include "draw.h"
+#include <sys/time.h>
+#include "c_includes.h"
 
-enum {maxDraw=10000};
+enum {maxRound=2, maxDraw=10000};
 
 typedef struct {
     CGPoint geometryVertex;
@@ -22,15 +23,34 @@ typedef struct {
     TexturedVertex tr;
 } TexturedQuad;
 
-TexturedQuad vectors[maxDraw];
+static struct {
+    int cntDraw;
+    TexturedQuad vectors[maxDraw];
+} rounds[maxRound];
 
 int exited = 0;
-static int cntDraw = 0;
+static int myround = 0;
 static jmp_buf unwind;
 
 void resetdraw(void)
 {
-    cntDraw = 0;
+    if (opt->trails)
+    {
+        int mycnt = rounds[myround].cntDraw;
+        TexturedQuad *vectors = rounds[myround].vectors;
+        for (int i = 0; i < mycnt; i++)
+            {
+                float fade = (vectors[i].bl.colorVertex.red+vectors[i].bl.colorVertex.green+vectors[i].bl.colorVertex.blue)/3;
+                vectors[i].bl.colorVertex.red = fade;
+                vectors[i].bl.colorVertex.green = fade;
+                vectors[i].bl.colorVertex.blue = fade;
+                vectors[i].tr.colorVertex.red = fade;
+                vectors[i].tr.colorVertex.green = fade;
+                vectors[i].tr.colorVertex.blue = fade;
+            }
+    }
+    myround = (myround+1)%maxRound;
+    rounds[myround].cntDraw = 0;
 }
 
 up_gl_t updateGL(CGRect bounds, CGPoint center)
@@ -46,7 +66,7 @@ up_gl_t updateGL(CGRect bounds, CGPoint center)
     {
         if (!setjmp(unwind))
         {
-            cntDraw = 0;
+            resetdraw();
             staticscreen();
             cbzone_while();
             msgrefresh();
@@ -57,28 +77,41 @@ up_gl_t updateGL(CGRect bounds, CGPoint center)
 
 void drawBg(CGRect bounds)
 {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
+struct timeval tval;
+static struct timeval oldtval;
+gettimeofday(&tval, 0);
+//if (tval.tv_usec < oldtval.tv_usec || 1)
+    {
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT);
+//        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//        glEnable(GL_BLEND);
+    }
+    oldtval = tval;
 }
 
 void drawFg(CGRect bounds, CGPoint center)
 {
     TexturedQuad newQuad;
-    for (int i = 0; i < cntDraw; i++)
+    for (int rnd = opt->trails ? 0 : maxRound-1; rnd < maxRound; rnd++)
     {
-        newQuad = vectors[i];
-        long offset = (long)&newQuad;
+        int myrnd = (rnd+myround+1)%maxRound;
+        int mycnt = rounds[myrnd].cntDraw;
+        TexturedQuad *vectors = rounds[myrnd].vectors;
+        for (int i = 0; i < mycnt; i++)
+        {
+            newQuad = vectors[i];
+            long offset = (long)&newQuad;
         
-        glLineWidth(2.0);
-        glEnableVertexAttribArray(GLKVertexAttribPosition);
-        glEnableVertexAttribArray(GLKVertexAttribColor);
+            glLineWidth(opt->linewidth);
+            glEnableVertexAttribArray(GLKVertexAttribPosition);
+            glEnableVertexAttribArray(GLKVertexAttribColor);
         
-        glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
-        glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, colorVertex)));
+            glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
+            glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, colorVertex)));
         
-        glDrawArrays(GL_LINES, 0, 2);
+            glDrawArrays(GL_LINES, 0, 2);
+        }
     }
 }
 
@@ -88,11 +121,11 @@ void drawLineRel(float x1, float y1, float x2, float y2, unsigned long drawforeg
     float green = ((drawforeground >> 8) & 255)/255.0;
     float blue = (drawforeground & 255)/255.0;
     float alpha = 1.0;
-    assert(cntDraw < maxDraw);
+    assert(rounds[myround].cntDraw < maxDraw);
     TexturedQuad newQuad;
 
-    newQuad.bl.geometryVertex = CGPointMake(x1/**magx+offx*/, /*offy*/-y1/**magy*/);
-    newQuad.tr.geometryVertex = CGPointMake(x2/**magx+offx*/, /*offy*/-y2/**magy*/);
+    newQuad.bl.geometryVertex = CGPointMake(x1, -y1);
+    newQuad.tr.geometryVertex = CGPointMake(x2, -y2);
 
     newQuad.bl.colorVertex.red = red;
     newQuad.bl.colorVertex.green = green;
@@ -103,7 +136,8 @@ void drawLineRel(float x1, float y1, float x2, float y2, unsigned long drawforeg
     newQuad.tr.colorVertex.blue = blue;
     newQuad.tr.colorVertex.alpha = alpha;
     
-    vectors[cntDraw++] = newQuad;
+    rounds[myround].vectors[rounds[myround].cntDraw] = newQuad;
+    if (drawforeground) rounds[myround].cntDraw++;
 }
 
 void glSetup(CGRect bounds)
@@ -112,10 +146,13 @@ void glSetup(CGRect bounds)
     init_event();
     
     cbzone_main(0, NULL);
+    
+    playsound(sgame_begin);
 }
 
 void myexit(int status)
 {
     exited = true;
+    playsound(sgame_end);
     longjmp(unwind, 1);
 }

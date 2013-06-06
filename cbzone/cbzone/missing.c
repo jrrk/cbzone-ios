@@ -729,27 +729,6 @@ void XtGetApplicationResources(
  {
      Optionp opt = (Optionp) arg2;
      const char* cname[] = {"black", "skyblue", "skyblue", "skyblue", "skyblue", "gray50", "gray50",  "gray50", "red", "red", "red", "green", "green", "green", "green",  "green", "green", "yellow", "yellow"};
-     opt->delay = 5;
-     opt->mblocks = 8;
-     opt->mlanders = 4;
-     opt->mmissiles = 1;
-     opt->msalvos = -1;
-     opt->mtanks = 1;
-     opt->menemies = 0;
-     opt->mobjects = 0;
-     opt->estart = 0;
-     opt->lstart = 0;
-     opt->sstart = 0;
-     opt->bstart = 0;
-     opt->copters = 0;
-     opt->loud = 1;
-     opt->practice = 0;
-     opt->output = 1;
-     opt->scores = 0;
-     opt->version = 0;
-     opt->help = 0;
-     opt->original = 0;
-     opt->cursor = 0;
      memcpy(opt->cname, cname, sizeof cname);
      memset(opt->cpi, 0, sizeof(opt->cpi));
      opt->mono = 0;

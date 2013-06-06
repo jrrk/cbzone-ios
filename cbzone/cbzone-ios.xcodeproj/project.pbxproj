@@ -27,6 +27,19 @@
 		6A4313F7173B7BE900971BB4 /* 114px-Chall2_2003.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A4313F6173B7BE900971BB4 /* 114px-Chall2_2003.png */; };
 		6A4313F9173B7C2D00971BB4 /* 57px-Chall2_2003.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A4313F8173B7C2D00971BB4 /* 57px-Chall2_2003.png */; };
 		6A431406173CCB2300971BB4 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A431405173CCB2300971BB4 /* GameKit.framework */; };
+		6A7CF6A3175888B3002AEAE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6A2175888B3002AEAE2 /* Settings.bundle */; };
+		6A7CF6C1175A4E9D002AEAE2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A7CF6C0175A4E9D002AEAE2 /* AudioToolbox.framework */; };
+		6A7CF6CE175A54DE002AEAE2 /* enemy_seen2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C3175A54DE002AEAE2 /* enemy_seen2.wav */; };
+		6A7CF6CF175A54DE002AEAE2 /* fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C4175A54DE002AEAE2 /* fire.wav */; };
+		6A7CF6D0175A54DE002AEAE2 /* game_begin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C5175A54DE002AEAE2 /* game_begin.wav */; };
+		6A7CF6D1175A54DE002AEAE2 /* game_end2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C6175A54DE002AEAE2 /* game_end2.wav */; };
+		6A7CF6D2175A54DE002AEAE2 /* kill.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C7175A54DE002AEAE2 /* kill.wav */; };
+		6A7CF6D3175A54DE002AEAE2 /* move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C8175A54DE002AEAE2 /* move.wav */; };
+		6A7CF6D4175A54DE002AEAE2 /* move_blocked2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6C9175A54DE002AEAE2 /* move_blocked2.wav */; };
+		6A7CF6D5175A54DE002AEAE2 /* object_explodes2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6CA175A54DE002AEAE2 /* object_explodes2.wav */; };
+		6A7CF6D6175A54DE002AEAE2 /* salvo_fired2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6CB175A54DE002AEAE2 /* salvo_fired2.wav */; };
+		6A7CF6D7175A54DE002AEAE2 /* user_died.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6CC175A54DE002AEAE2 /* user_died.wav */; };
+		6A7CF6D8175A54DE002AEAE2 /* user_shoots2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CF6CD175A54DE002AEAE2 /* user_shoots2.wav */; };
 		6A8D314417270CA200AC7B42 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A8D314317270CA200AC7B42 /* Default-568h@2x.png */; };
 		6A8D315617270D3100AC7B42 /* c_draw.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A8D314D17270D3100AC7B42 /* c_draw.c */; };
 		6A8D315717270D3100AC7B42 /* c_explode.c in Sources */ = {isa = PBXBuildFile; fileRef = 6A8D314E17270D3100AC7B42 /* c_explode.c */; };
@@ -68,6 +81,19 @@
 		6A4313F6173B7BE900971BB4 /* 114px-Chall2_2003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "114px-Chall2_2003.png"; sourceTree = "<group>"; };
 		6A4313F8173B7C2D00971BB4 /* 57px-Chall2_2003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "57px-Chall2_2003.png"; sourceTree = "<group>"; };
 		6A431405173CCB2300971BB4 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		6A7CF6A2175888B3002AEAE2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
+		6A7CF6C0175A4E9D002AEAE2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		6A7CF6C3175A54DE002AEAE2 /* enemy_seen2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = enemy_seen2.wav; sourceTree = "<group>"; };
+		6A7CF6C4175A54DE002AEAE2 /* fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fire.wav; sourceTree = "<group>"; };
+		6A7CF6C5175A54DE002AEAE2 /* game_begin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = game_begin.wav; sourceTree = "<group>"; };
+		6A7CF6C6175A54DE002AEAE2 /* game_end2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = game_end2.wav; sourceTree = "<group>"; };
+		6A7CF6C7175A54DE002AEAE2 /* kill.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kill.wav; sourceTree = "<group>"; };
+		6A7CF6C8175A54DE002AEAE2 /* move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move.wav; sourceTree = "<group>"; };
+		6A7CF6C9175A54DE002AEAE2 /* move_blocked2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move_blocked2.wav; sourceTree = "<group>"; };
+		6A7CF6CA175A54DE002AEAE2 /* object_explodes2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = object_explodes2.wav; sourceTree = "<group>"; };
+		6A7CF6CB175A54DE002AEAE2 /* salvo_fired2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = salvo_fired2.wav; sourceTree = "<group>"; };
+		6A7CF6CC175A54DE002AEAE2 /* user_died.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = user_died.wav; sourceTree = "<group>"; };
+		6A7CF6CD175A54DE002AEAE2 /* user_shoots2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = user_shoots2.wav; sourceTree = "<group>"; };
 		6A8D314317270CA200AC7B42 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		6A8D314517270D3100AC7B42 /* c_colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c_colors.h; path = cbzone/c_colors.h; sourceTree = "<group>"; };
 		6A8D314617270D3100AC7B42 /* c_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c_config.h; path = cbzone/c_config.h; sourceTree = "<group>"; };
@@ -97,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A7CF6C1175A4E9D002AEAE2 /* AudioToolbox.framework in Frameworks */,
 				6A431406173CCB2300971BB4 /* GameKit.framework in Frameworks */,
 				354546B11433CCED0074AF72 /* GLKit.framework in Frameworks */,
 				354546AF1433CCE80074AF72 /* OpenGLES.framework in Frameworks */,
@@ -113,6 +140,9 @@
 		354546821433C8990074AF72 = {
 			isa = PBXGroup;
 			children = (
+				6A7CF6C2175A54DE002AEAE2 /* sounds */,
+				6A7CF6C0175A4E9D002AEAE2 /* AudioToolbox.framework */,
+				6A7CF6A2175888B3002AEAE2 /* Settings.bundle */,
 				6A1C81D5174411E80087141F /* Default~ipad.png */,
 				6A1C81D3174411E10087141F /* Default-Landscape~ipad.png */,
 				6A1C81D1174372520087141F /* 144px-Chall2_2003.png */,
@@ -177,6 +207,24 @@
 				3545469F1433C8990074AF72 /* cbzone-ios-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6A7CF6C2175A54DE002AEAE2 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				6A7CF6C3175A54DE002AEAE2 /* enemy_seen2.wav */,
+				6A7CF6C4175A54DE002AEAE2 /* fire.wav */,
+				6A7CF6C5175A54DE002AEAE2 /* game_begin.wav */,
+				6A7CF6C6175A54DE002AEAE2 /* game_end2.wav */,
+				6A7CF6C7175A54DE002AEAE2 /* kill.wav */,
+				6A7CF6C8175A54DE002AEAE2 /* move.wav */,
+				6A7CF6C9175A54DE002AEAE2 /* move_blocked2.wav */,
+				6A7CF6CA175A54DE002AEAE2 /* object_explodes2.wav */,
+				6A7CF6CB175A54DE002AEAE2 /* salvo_fired2.wav */,
+				6A7CF6CC175A54DE002AEAE2 /* user_died.wav */,
+				6A7CF6CD175A54DE002AEAE2 /* user_shoots2.wav */,
+			);
+			path = sounds;
 			sourceTree = "<group>";
 		};
 		6A8D315F17270D9E00AC7B42 /* cbzone */ = {
@@ -265,6 +313,18 @@
 				6A1C81D2174372520087141F /* 144px-Chall2_2003.png in Resources */,
 				6A1C81D4174411E10087141F /* Default-Landscape~ipad.png in Resources */,
 				6A1C81D6174411E80087141F /* Default~ipad.png in Resources */,
+				6A7CF6A3175888B3002AEAE2 /* Settings.bundle in Resources */,
+				6A7CF6CE175A54DE002AEAE2 /* enemy_seen2.wav in Resources */,
+				6A7CF6CF175A54DE002AEAE2 /* fire.wav in Resources */,
+				6A7CF6D0175A54DE002AEAE2 /* game_begin.wav in Resources */,
+				6A7CF6D1175A54DE002AEAE2 /* game_end2.wav in Resources */,
+				6A7CF6D2175A54DE002AEAE2 /* kill.wav in Resources */,
+				6A7CF6D3175A54DE002AEAE2 /* move.wav in Resources */,
+				6A7CF6D4175A54DE002AEAE2 /* move_blocked2.wav in Resources */,
+				6A7CF6D5175A54DE002AEAE2 /* object_explodes2.wav in Resources */,
+				6A7CF6D6175A54DE002AEAE2 /* salvo_fired2.wav in Resources */,
+				6A7CF6D7175A54DE002AEAE2 /* user_died.wav in Resources */,
+				6A7CF6D8175A54DE002AEAE2 /* user_shoots2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,17 +425,16 @@
 		354546A61433C8990074AF72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
 				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "cbzone-ios";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "57F90574-66C3-46AC-92A6-239C87425645";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -383,17 +442,16 @@
 		354546A71433C8990074AF72 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
 				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "cbzone-ios";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "57F90574-66C3-46AC-92A6-239C87425645";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -734,12 +734,9 @@ void gprsetclippingactive(flag)
 
 void tonetime()
 {
+#ifdef X11
   if (opt->loud)
-#ifdef WIN32
-;
-//    MessageBeep();
-#else //X11
-    XBell(d, 0);
+    playsound(smove);
 #endif //X11
 }
 
