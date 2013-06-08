@@ -7,6 +7,7 @@
 //
 
 #import <GLKit/GLKit.h>
+#import <UIKit/UIViewController.h>
 
 @interface HelloGLKitViewController : GLKViewController <UIGestureRecognizerDelegate>
 

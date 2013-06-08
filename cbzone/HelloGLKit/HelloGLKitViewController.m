@@ -120,6 +120,25 @@ AudioServicesCreateSystemSoundID (
                                   );
 }
 
+static void rotate(UIInterfaceOrientation InterfaceOrientation)
+{
+switch(InterfaceOrientation)
+    {
+    case UIInterfaceOrientationLandscapeLeft:
+        rot(0,-1,-1,0,0,-0.5);
+        break;
+    case UIInterfaceOrientationLandscapeRight:
+        rot(0,1,1,0,0,-0.5);
+        break;
+    case UIInterfaceOrientationPortrait:
+        rot(1,0,0,1,0,-0.5);
+        break;
+    case UIInterfaceOrientationPortraitUpsideDown:
+        rot(-1,0,0,-1,0,-0.5);
+        break;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -193,7 +212,7 @@ AudioServicesCreateSystemSoundID (
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableMultisample = GLKViewDrawableMultisample4X;
-    [self shouldAutorotateToInterfaceOrientation:UIInterfaceOrientationLandscapeRight];
+    rotate(super.interfaceOrientation);
     [self setupGL];
 }
 
@@ -213,19 +232,14 @@ AudioServicesCreateSystemSoundID (
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    CGSize bsize = self.view.bounds.size;
-    int sz = (int)bsize.width;
-    switch(interfaceOrientation)
-    {
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
-            return YES;
-            break;
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
-            return YES;
-            break;
-    }
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+//    CGSize bsize = self.view.bounds.size;
+//    int sz = (int)bsize.width;
+    rotate(toInterfaceOrientation);
 }
 
 #pragma mark - GLKViewDelegate
@@ -250,7 +264,7 @@ AudioServicesCreateSystemSoundID (
 
 #if 1
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSTimeInterval  timestamp = event.timestamp;
+//    NSTimeInterval  timestamp = event.timestamp;
     switch(event.type)
     {
         case UIEventTypeTouches:

@@ -100,5 +100,5 @@ void msgrefresh(void);
 void sound(char *soundName, int soundid);
 void playsound(sound_t);
 void myexit(int);
-
+void rot(float,float,float,float,float,float);
 #endif

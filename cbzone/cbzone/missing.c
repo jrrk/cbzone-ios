@@ -256,6 +256,7 @@ static int myhead;
 static int mytail;
 static XEvent myevent[256], *eventptr;
 static Position_t myposn;
+static float rot11, rot12, rot21, rot22, offx, offy;
 
 void init_event(void)
 {
@@ -271,6 +272,16 @@ static float min(float a, float b)
     return a < b ? a : b;
 }
 
+void rot(float r11,float r12,float r21,float r22, float ox, float oy)
+{
+    rot11 = r11;
+    rot12 = r12;
+    rot21 = r21;
+    rot22 = r22;
+    offx = ox;
+    offy = oy;
+}
+
 void myaccel(float acceleration_x, float acceleration_y)
 {
 	static CGPoint levelPosition;
@@ -282,8 +293,8 @@ void myaccel(float acceleration_x, float acceleration_y)
 	levelPosition.y = sin(tiltDirection)*tiltMagnitude;
 	levelPosition.x = -cos(tiltDirection)*tiltMagnitude;
 
-    myposn.x = 500 * (1.0 + levelPosition.y);
-    myposn.y = 355 * (1.0 + levelPosition.x - 0.5);
+    myposn.x = 500 * (1.0 + rot11 * levelPosition.x + rot12 * levelPosition.y + offx);
+    myposn.y = 355 * (1.0 + rot21 * levelPosition.x + rot22 * levelPosition.y + offy);
     eventptr = myevent + myhead;
     eventptr->type = MotionNotify;
     eventptr->xmotion.x = myposn.x;
