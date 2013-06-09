@@ -7,7 +7,7 @@
  *  $Header: c_graphics.c,v 1.1 91/01/12 02:03:33 mummert Locked $
  */
 
-Font controlfont, titlefont, generalfont;
+Font controlfont, titlefont, generalfont, warningfont;
 static char mtext[3][41];
 
 void message(number, bell)
@@ -31,17 +31,20 @@ void message(number, bell)
 void msgrefresh(void)
 {
     int i;
-    static int xpt = 70;
+//    static int xpt = 70;
+    static int xpt = 100;
     static int ypt[] = {507, 567, 627};
   gprsetclippingactive(False);
     for (i = 0; i < 3; i++)
-        printstring(xpt, ypt[i], mtext[i], 40);
+        printstring(xpt, ypt[i], mtext[i], 40, 1);
   gprsetclippingactive(True);
 }
 
 void screeninit()
 {
+   
   controlfont = gprloadfontfile(CONTROLFONT);
+  warningfont = gprloadfontfile(WARNINGFONT);
   titlefont = gprloadfontfile(TITLEFONT);
   generalfont = gprloadfontfile(GENERALFONT);
   staticscreen();
@@ -51,7 +54,7 @@ void staticscreen()
 {
   static int window[2][2] = {70, 75, 860, 350};
   int pt[2], radius;
-  char text[30];
+  char text[40];
   static short line[] = {58, 66, 66, 58, 56, 438, 68, 438, 938, 56,
                            938, 68, 942, 442, 934, 434, 56, 472, 68, 472,
                            934, 468, 942, 476, 58, 644, 66, 652, 932, 648,
@@ -105,32 +108,41 @@ void staticscreen()
   gprcircle(pt, radius);                /*      joystick screen         */
   radius = 64;
   gprcircle(pt, radius);
+#if 0
   gprsetdrawvalue(opt->cpi[COLOR_TEXT]);
   drawrectangle(590, 570, 55, 30);      /*      missile warning         */
   drawrectangle(655, 570, 55, 30);      /*      lander warning          */
   drawrectangle(590, 520, 120, 30);     /*         score box            */
+#endif
   gprsettextfont(titlefont);
-  strcpy(text, "BATTLEZONE V2.0c");
-  printstring(50, 45, text, strlen(text));
+  strcpy(text, "Pugna Zona V2.0i");
+  printstring(50, 45, text, strlen(text), 1);
+#if 0
   gprsettextvalue(opt->cpi[COLOR_JOYSTICK]);
   strcpy(text, "F");                    /* directions for the joystick  */
-  printstring(850, 503, text, 1);
+  printstring(850, 503, text, 1, 1);
   strcpy(text, "B");
-  printstring(850, 630, text, 1);
+  printstring(850, 630, text, 1, 1);
   strcpy(text, "R");
-  printstring(913, 570, text, 1);
+  printstring(913, 570, text, 1, 1);
   strcpy(text, "L");
-  printstring(785, 570, text, 1);
+  printstring(785, 570, text, 1, 1);
+#endif
+#if 0
   gprsettextvalue(opt->cpi[COLOR_TEXT]);
-  gprsettextfont(controlfont);
+  gprsettextfont(warningfont);
   strcpy(text, "Missile");              /*      warning messages        */
-  printstring(595, 590, text, 7);
+  printstring(595, 590, text, 7, 1);
+  gprsettextfont(controlfont);
   strcpy(text, "Lander");
-  printstring(664, 590, text, 6);
+  printstring(664, 590, text, 6, 1);
+#endif
+#if 0
   strcpy(text, "H");                    /*      switch positions        */
-  printstring(920, 608, text, 1);
+  printstring(920, 608, text, 1, 1);
   strcpy(text, "L");
-  printstring(920, 642, text, 1);
+  printstring(920, 642, text, 1, 1);
+#endif
   gprsetclipwindow(window);             /* define the playing field     */
   gprsettextfont(generalfont);
   pt[0] = 500;
@@ -144,13 +156,13 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
      long score;  // Eric Fogelin made this long from int
      int numleft;
 {
-  char text[11];
+  char text[30];
   static Bool flasher[] = {False, False};
   static int currentnumleft = 0;
   static int bswitch[] = {918, 612};
   static int blswitch[] = {918, 638};	// Eric Fogelin: added - orig did not work
-  static int wind1[][2] = {591, 571, 54, 29};
-  static int wind2[][2] = {656, 571, 54, 29};
+//  static int wind1[][2] = {591, 571, 54, 29};
+//  static int wind2[][2] = {656, 571, 54, 29};
   static int origin[][2] = {733, 493, 733, 533, 733, 573, 733, 613};
   static Bool currentsens = True;
 
@@ -160,18 +172,21 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
     currentsens = True;
   }
 
-  if ((flasher[0] && !missile) ||       /* change the missile warning */
-      (!flasher[0] && missile)) {
-    flasher[0] = missile;
-    bitblt(wind1);
-  }
-  if ((flasher[1] && !lander) ||        /* change the lander warning */
-      (!flasher[1] && lander)) {
-    flasher[1] = lander;
-    bitblt(wind2);
-  }
-  sprintf(text,"%10ld",score);  // Eric Fogelin changed this to ld from d
-  printstring(608, 542, text, strlen(text));
+      gprsettextvalue(opt->cpi[COLOR_TEXT]);
+      gprsettextfont(warningfont);
+      strcpy(text, missile ? "Missile" : "");              /*      warning messages        */
+//    printstring(595, 590, text, strlen(text), 1);
+      printstring(100, 250, text, strlen(text), 5);
+
+      gprsettextvalue(opt->cpi[COLOR_TEXT]);
+      gprsettextfont(controlfont);
+      strcpy(text, lander ? "Lander" : "");
+      printstring(664, 590, text, strlen(text), 2);
+
+    gprsettextvalue(opt->cpi[COLOR_TEXT]);
+    gprsettextfont(generalfont);
+    sprintf(text,"SCORE %9ld",score);  // Eric Fogelin changed this to ld from d
+    printstring(350, 30, text, strlen(text), 3);
   if (numleft < currentnumleft && numleft >= 0)    /* remove tank(s) */
     while (numleft != currentnumleft)
       removepixmap(4, origin[--currentnumleft]);

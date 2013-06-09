@@ -200,7 +200,7 @@
 			<key>Key</key>
 			<string>trails_preference</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>

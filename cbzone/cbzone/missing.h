@@ -2235,26 +2235,6 @@ extern int XDrawArcs(
     int			
 );
 
-extern int XDrawImageString(
-    Display*		,
-    Drawable		,
-    GC			,
-    int			,
-    int			,
-    __const char*	,
-    int			
-);
-
-extern int XDrawImageString16(
-    Display*		,
-    Drawable		,
-    GC			,
-    int			,
-    int			,
-    __const XChar2b*	,
-    int			
-);
-
 extern int XDrawLine(
     Display*		,
     Drawable		,

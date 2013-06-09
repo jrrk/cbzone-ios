@@ -198,14 +198,28 @@ int XDrawArc(
              Display*		arg1,
              Drawable		arg2,
              GC             arg3,
-             int			arg4,
-             int			arg5,
-             unsigned int	arg6,
-             unsigned int	arg7,
-             int			arg8,
-             int			arg9
+             int			cx_r,
+             int			cy_r,
+             unsigned int	r2_1,
+             unsigned int	r2_2,
+             int			start,
+             int			stop
              )
 {
+    float wid = arg1->screens->width;
+    float height = arg1->screens->height;
+    float oldx, oldy;
+    for (float ang = start; ang < stop; ang += 256)
+    {
+        float xinc = r2_1/2*sin(ang/64*M_PI/180);
+        float yinc = r2_2/2*cos(ang/64*M_PI/180);
+        float x = cx_r + r2_1/2 + xinc;
+        float y = cy_r + r2_2/2 + yinc;
+        if (ang != start)
+            drawLineRel(x/wid,y/height,oldx/wid,oldy/height, arg3->values.foreground);
+        oldx = x;
+        oldy = y;
+    }
     return 0;
 }
 
@@ -578,13 +592,11 @@ int XStoreName(
                const char*	arg3
                ) { return 0; }
 
-enum styles {titlestyle,controlstyle,generalstyle};
-
-void char_tab(int a);
+enum styles {titlestyle,controlstyle,generalstyle,warningstyle};
 
 static unsigned long _drawforeground;
-static float _wid;
-static float _height;
+static float _wid, _w;
+static float _height, _h;
 static float _x0, _y0, _x1, _y1;
 static enum styles _style;
 
@@ -605,34 +617,45 @@ void fcoord(float x0, float y0, float x1, float y1)
             xscale = 0.7;
             yscale = 0.5;
             break;
+        case warningstyle:
+            xscale = 1.0;
+            yscale = 0.7;
+            break;
     }
-    _x1 += x1*xscale;
-    _y1 = y1*yscale;
+    _x1 += x1*xscale*_w;
+    _y1 = y1*yscale*_h;
 }
 
 void fline(float x0, float y0, float x1, float y1)
 {
-        drawLineRel((x0+_x0+_x1)/_wid,(_y0+_y1-y0)/_height,
-                    (x1+_x0+_x1)/_wid,(_y0+_y1-y1)/_height,
+        drawLineRel((x0*_w+_x0+_x1)/_wid,(_y0+_y1-y0*_h)/_height,
+                    (x1*_w+_x0+_x1)/_wid,(_y0+_y1-y1*_h)/_height,
                     _drawforeground);
 }
 
-extern Font controlfont, titlefont, generalfont;
+extern Font controlfont, titlefont, generalfont, warningfont;
+extern Display *d;
+extern Window w, root;
+extern GC BitBltGC, DrawGC, TextGC, EraseGC;
 
-int XDrawImageString(
+static int myDrawImageString(
                      Display*		arg1,
                      Drawable		arg2,
                      GC             arg3,
                      int			x,
                      int			y,
                      __const char*	arg6,
-                     int			arg7
+                     int			arg7,
+                     float          scale
                      )
 {
     float xoff, yoff;
     if (arg3->values.font == titlefont) _style = titlestyle;
     if (arg3->values.font == controlfont) _style = controlstyle;
+    if (arg3->values.font == warningfont) _style = warningstyle;
     if (arg3->values.font == generalfont) _style = generalstyle;
+    _w = scale;
+    _h = scale;
     switch(_style)
     {
         case titlestyle:
@@ -647,6 +670,10 @@ int XDrawImageString(
             xoff = -50.0;
             yoff = -8.0;
             break;
+        case warningstyle:
+            xoff = -15.0;
+            yoff = +30.0;
+            break;
     }
     _drawforeground = arg3->values.foreground;
     _wid = arg1->screens->width;
@@ -658,6 +685,15 @@ int XDrawImageString(
     const char *msg = arg6;
     while (*msg) char_tab(*msg++);
     return 0;
+}
+
+void printstring(x, y, string, nchars, scale)
+int x, y;
+char* string;
+int nchars;
+float scale;
+{
+    myDrawImageString (d, w, TextGC, x, y, string, nchars, scale);
 }
 
 int XSetIconName(

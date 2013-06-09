@@ -32,7 +32,6 @@ typedef struct {
   Bool copters;              /* just helicopters        */
   Bool silent;               /* silence is golden */
   Bool loud;                 /* use loud sounds */
-  Bool practice;             /* valid score?            */
   Bool output;               /* print messages to tty?  */
   Bool scores;
   Bool version;

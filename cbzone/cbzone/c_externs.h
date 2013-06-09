@@ -33,6 +33,7 @@ extern void bitblt(
 );
 extern void clearentirescreen(
 #if FunctionPrototypes
+                              void
 #endif
 );
 extern void clearrectangle(
@@ -51,6 +52,7 @@ extern void drawrectangle(
 );
 extern void flushwindow(
 #if FunctionPrototypes
+                        void
 #endif
 );
 extern void gprcircle(
@@ -66,8 +68,10 @@ extern void gprcirclefilled(
 #endif
 );
 extern void gprinqconfig(
+#if FunctionPrototypes
         int* /* argc */,
         const char* const* /* argv */
+#endif
 );
 extern void gprinqcursor(
 #if FunctionPrototypes
@@ -131,7 +135,8 @@ extern void printstring(
         int /* x */,
         int /* y */,
         char* /* string */,
-        int /* nchars */
+        int /* nchars */,
+        float /* scale */
 #endif
 );
 extern void putpixmap(
@@ -153,6 +158,7 @@ extern void timeclock(
 );
 extern void tonetime(
 #if FunctionPrototypes
+                     void
 #endif
 );
 extern void waitforkey(
@@ -164,10 +170,12 @@ extern void waitforkey(
 /* now some externs from c_graphics.c */
 extern void clearscreen(
 #if FunctionPrototypes
+                        void
 #endif
 );
 extern void drawcracks(
 #if FunctionPrototypes
+                       void
 #endif
 );
 extern void drawhorizon(
@@ -195,10 +203,12 @@ extern void scanner(
 );
 extern void screeninit(
 #if FunctionPrototypes
+                       void
 #endif
 );
 extern void staticscreen(
 #if FunctionPrototypes
+                         void
 #endif
 );
 extern void updatedisplay(

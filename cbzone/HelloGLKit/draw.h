@@ -101,4 +101,7 @@ void sound(char *soundName, int soundid);
 void playsound(sound_t);
 void myexit(int);
 void rot(float,float,float,float,float,float);
+void char_tab(int);
+void fcoord(float x0, float y0, float x1, float y1);
+void fline(float x0, float y0, float x1, float y1);
 #endif

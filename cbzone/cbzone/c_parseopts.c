@@ -231,13 +231,4 @@ void parseopt(argc, argv, status)
   opt->sstart = opt->lstart + opt->mlanders;
   opt->bstart = opt->sstart + opt->menemies + opt->msalvos;
 
-  if (opt->mmissiles == MMISSILES &&
-      opt->mtanks == MTANKS &&
-      opt->mlanders == MLANDERS &&
-      opt->mblocks == MBLOCKS &&
-      opt->delay <= DELAY &&
-      opt->msalvos == opt->menemies)
-    opt->practice = False;
-  else
-    opt->practice = True;
 }

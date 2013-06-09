@@ -47,7 +47,7 @@ static void p(s, output)                 /* print to the X screen */
      char* s;
      Bool output;
 {
-  printstring (x, y, s, strlen(s));
+  printstring (x, y, s, strlen(s), 2);
   y += ydelta;
 }
 
@@ -63,7 +63,6 @@ long scores(score)
 
   FILE *sfile;
   char buf[200];
-  char *login, *getlogin();
   int i;
   int numgame = 0;
   int numscore = 0;
@@ -71,18 +70,22 @@ long scores(score)
   Bool score_printed = False;
   Bool scoresonly = False;
   Bool wrong_version = False;
-  Bool practice = opt->practice;
-  struct passwd* pw;
 
-  x = 350;
+  x = 100;
   y = 100;
-    ydelta = 25;
+    ydelta = 50;
 
     
     top_score = (struct score_struct*) malloc(sizeof(struct score_struct));
     current = top_score;
     
-  sprintf(buf,"%s%s",TANKDIR,SCOREFILE);
+  sprintf(buf,"%s%s_%d_%d_%d_%d_%d_%d",TANKDIR,SCOREFILE,
+    opt->mmissiles,
+        opt->mtanks,
+        opt->mlanders,
+        opt->mblocks,
+        opt->delay,
+          opt->msalvos);
   sfile = fopen(buf,"r+");       /* just check if it is there */
 
   if (sfile == NULL)
@@ -112,15 +115,19 @@ long scores(score)
      */
     player.uid = getuid();
     player.score = score;
-    pw = getpwuid(player.uid);
-    if (pw == NULL)
-      if ((login = getlogin()) != NULL)
-        strcpy(player.name, login);
-      else {
-          strcpy(player.name, "Anon");
-      }
-    else
-      strcpy(player.name, pw->pw_name);
+      if (score == 0) strcpy(player.name, "Recruit"); else
+          if (score < 5000) strcpy(player.name, "Trooper"); else
+              if (score < 10000) strcpy(player.name, "Driver"); else
+                  if (score < 20000) strcpy(player.name, "Machine Gunner"); else
+              if (score < 50000) strcpy(player.name, "Lance Corporal"); else
+                  if (score < 100000) strcpy(player.name, "Corporal"); else
+                      if (score < 200000) strcpy(player.name, "Tank IT Operator"); else
+                          if (score < 500000) strcpy(player.name, "Pilot"); else
+                              if (score < 1000000) strcpy(player.name, "Special Forces Signaller"); else
+                                  if (score < 2000000) strcpy(player.name, "Deputy Tank Commander"); else
+                                      if (score < 5000000) strcpy(player.name, "Tank Commander"); else
+                                          if (score < 10000000) strcpy(player.name, "Combat Air Controller"); else
+                                              strcpy(player.name, "General");
 
     if (numscore < NUMHIGH || player.score > prev_score->score) {
       score_printed = True;
@@ -148,10 +155,10 @@ long scores(score)
       *buf = '>';
     else
       *buf = ' ';
-    sprintf(buf+1, "%-20s %8ld", current->name, current->score);
+    sprintf(buf+1, "%-24s %8ld", current->name, current->score);
     p(buf, opt->output);
 
-    if (((wrong_version || practice) && current==&player) ||
+    if (((wrong_version) && current==&player) ||
         (current->uid==player.uid && !strcmp(player.name, current->name) &&
          ++player_scores>INDIVIDUAL_SCORES)) {
       numscore--;

@@ -596,18 +596,6 @@ void gprsettextfont(font)
 #endif //X11
 }
 
-void printstring(x, y, string, nchars)
-     int x, y;
-     char* string;
-     int nchars;
-{
-#ifdef WIN32
-  TextOut (hdc, x, y, string, nchars);
-#else //X11
-  XDrawImageString (d, w, TextGC, x, y, string, nchars);
-#endif //X11
-}
-
 void polyline(points, number)
      XPoint *points;
      int number;

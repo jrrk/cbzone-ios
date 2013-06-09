@@ -13,8 +13,8 @@
 
 /* The number of high scores saved, and how many any one        */
 /* person can get.                                              */
-#define NUMHIGH 20
-#define INDIVIDUAL_SCORES 3
+#define NUMHIGH 10
+#define INDIVIDUAL_SCORES 10
 
 /*
  * Whatever paging file you want to use...more or less.
@@ -75,6 +75,7 @@
  * or just empty it.  Then either make the scorefile writeable, or
  * run this program suid (not an option on AFS).
  */
+#define WARNINGFONT "-*-warning-medium-r-*--10-*-*-*-*-60-iso8859-1"
 #define VERSION "Sun Jan 13 23:27:51 EST 1991"
 
 
