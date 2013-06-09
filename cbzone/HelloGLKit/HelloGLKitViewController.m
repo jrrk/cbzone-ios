@@ -131,10 +131,10 @@ switch(InterfaceOrientation)
         rot(0,1,1,0,0,-0.5);
         break;
     case UIInterfaceOrientationPortrait:
-        rot(1,0,0,1,0,-0.5);
+        rot(1,0,0,-1,0,-0.5);
         break;
     case UIInterfaceOrientationPortraitUpsideDown:
-        rot(-1,0,0,-1,0,-0.5);
+        rot(1,0,0,1,0,-0.5);
         break;
     }
 }

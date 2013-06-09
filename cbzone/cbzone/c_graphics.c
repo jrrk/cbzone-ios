@@ -95,18 +95,20 @@ void staticscreen()
   multiline(line, 8);                   /*        now the slots         */
   pt[0] = 500;
   pt[1] = 560;
-  radius = 65;
+//  radius = 65;
+  radius = 80;
   gprsetdrawvalue(opt->cpi[COLOR_SCANNER]);
   gprcircle(pt, radius);                /*      radar screen            */
-  radius = 64;
+//    radius = 64;
+  radius = 79;
   gprcircle(pt, radius);
   multiline(scan, 4);
   pt[0] = 855;
   pt[1] = 560;
-  radius = 65;
+  radius = 80;
   gprsetdrawvalue(opt->cpi[COLOR_JOYSTICK]);
   gprcircle(pt, radius);                /*      joystick screen         */
-  radius = 64;
+  radius = 79;
   gprcircle(pt, radius);
 #if 0
   gprsetdrawvalue(opt->cpi[COLOR_TEXT]);
@@ -135,7 +137,7 @@ void staticscreen()
   printstring(595, 590, text, 7, 1);
   gprsettextfont(controlfont);
   strcpy(text, "Lander");
-  printstring(664, 590, text, 6, 1);
+  printstring(600, 590, text, 6, 1);
 #endif
 #if 0
   strcpy(text, "H");                    /*      switch positions        */
@@ -181,12 +183,12 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
       gprsettextvalue(opt->cpi[COLOR_TEXT]);
       gprsettextfont(controlfont);
       strcpy(text, lander ? "Lander" : "");
-      printstring(664, 590, text, strlen(text), 2);
+      printstring(600, 590, text, strlen(text), 2);
 
     gprsettextvalue(opt->cpi[COLOR_TEXT]);
     gprsettextfont(generalfont);
     sprintf(text,"SCORE %9ld",score);  // Eric Fogelin changed this to ld from d
-    printstring(350, 30, text, strlen(text), 3);
+    printstring(350, 30, text, strlen(text), 2.5);
   if (numleft < currentnumleft && numleft >= 0)    /* remove tank(s) */
     while (numleft != currentnumleft)
       removepixmap(4, origin[--currentnumleft]);
