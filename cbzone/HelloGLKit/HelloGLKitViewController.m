@@ -143,6 +143,7 @@ switch(InterfaceOrientation)
 {
     [super viewDidLoad];
 
+    self.preferredFramesPerSecond=15;
     // start monitoring the document directory…
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 

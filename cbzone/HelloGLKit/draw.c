@@ -12,20 +12,13 @@
 
 enum {maxRound=2, maxDraw=10000};
 
-typedef struct {
-    CGPoint geometryVertex;
-//    CGPoint textureVertex;
-    struct {float red, green, blue, alpha;} colorVertex;
-} TexturedVertex;
-
-typedef struct {
-    TexturedVertex bl;
-    TexturedVertex tr;
-} TexturedQuad;
+typedef struct {float red, green, blue, alpha, red2, green2, blue2, alpha2;} rgb_t;
+typedef struct {CGPoint bl,tr; } bl_tr_t;
 
 static struct {
     int cntDraw;
-    TexturedQuad vectors[maxDraw];
+    bl_tr_t geometryVertex[maxDraw];
+    rgb_t colorVertex[maxDraw];
 } rounds[maxRound];
 
 int exited = 0;
@@ -34,6 +27,7 @@ static jmp_buf unwind;
 
 void resetdraw(void)
 {
+#if 0
     if (opt->trails)
     {
         int mycnt = rounds[myround].cntDraw;
@@ -49,6 +43,7 @@ void resetdraw(void)
                 vectors[i].tr.colorVertex.blue = fade;
             }
     }
+#endif
     myround = (myround+1)%maxRound;
     rounds[myround].cntDraw = 0;
 }
@@ -77,41 +72,43 @@ up_gl_t updateGL(CGRect bounds, CGPoint center)
 
 void drawBg(CGRect bounds)
 {
-struct timeval tval;
-static struct timeval oldtval;
-gettimeofday(&tval, 0);
-//if (tval.tv_usec < oldtval.tv_usec || 1)
-    {
-        glClearColor(0.0, 0.0, 0.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
-//        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//        glEnable(GL_BLEND);
-    }
-    oldtval = tval;
+glClearColor(0.0, 0.0, 0.0, 1.0);
+glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void drawFg(CGRect bounds, CGPoint center)
 {
-    TexturedQuad newQuad;
     for (int rnd = opt->trails ? 0 : maxRound-1; rnd < maxRound; rnd++)
     {
         int myrnd = (rnd+myround+1)%maxRound;
         int mycnt = rounds[myrnd].cntDraw;
-        TexturedQuad *vectors = rounds[myrnd].vectors;
+        bl_tr_t *geomVertices = rounds[myrnd].geometryVertex;
+        rgb_t *colorVertices = rounds[myround].colorVertex;
+#if 0
         for (int i = 0; i < mycnt; i++)
         {
-            newQuad = vectors[i];
-            long offset = (long)&newQuad;
+            rgb_t colorVertex = colorVertices[i];
+            bl_tr_t newQuad = geomVertices[i];
         
             glLineWidth(opt->linewidth);
             glEnableVertexAttribArray(GLKVertexAttribPosition);
             glEnableVertexAttribArray(GLKVertexAttribColor);
         
-            glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, geometryVertex)));
-            glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void *) (offset + offsetof(TexturedVertex, colorVertex)));
+            glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, (void *) &newQuad);
+            glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, (void *) &colorVertex);
         
             glDrawArrays(GL_LINES, 0, 2);
         }
+#else
+            glLineWidth(opt->linewidth);
+            glEnableVertexAttribArray(GLKVertexAttribPosition);
+            glEnableVertexAttribArray(GLKVertexAttribColor);
+            
+            glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, (void *) geomVertices);
+            glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, (void *) colorVertices);
+            
+            glDrawArrays(GL_LINES, 0, 2*mycnt);
+#endif
     }
 }
 
@@ -122,21 +119,19 @@ void drawLineRel(float x1, float y1, float x2, float y2, unsigned long drawforeg
     float blue = (drawforeground & 255)/255.0;
     float alpha = 1.0;
     assert(rounds[myround].cntDraw < maxDraw);
-    TexturedQuad newQuad;
 
-    newQuad.bl.geometryVertex = CGPointMake(x1, -y1);
-    newQuad.tr.geometryVertex = CGPointMake(x2, -y2);
+    rounds[myround].geometryVertex[rounds[myround].cntDraw].bl = CGPointMake(x1, -y1);
+    rounds[myround].geometryVertex[rounds[myround].cntDraw].tr = CGPointMake(x2, -y2);
 
-    newQuad.bl.colorVertex.red = red;
-    newQuad.bl.colorVertex.green = green;
-    newQuad.bl.colorVertex.blue = blue;
-    newQuad.bl.colorVertex.alpha = alpha;
-    newQuad.tr.colorVertex.red = red;
-    newQuad.tr.colorVertex.green = green;
-    newQuad.tr.colorVertex.blue = blue;
-    newQuad.tr.colorVertex.alpha = alpha;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].red = red;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].green = green;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].blue = blue;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].alpha = alpha;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].red2 = red;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].green2 = green;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].blue2 = blue;
+    rounds[myround].colorVertex[rounds[myround].cntDraw].alpha2 = alpha;
     
-    rounds[myround].vectors[rounds[myround].cntDraw] = newQuad;
     if (drawforeground) rounds[myround].cntDraw++;
 }
 

@@ -426,7 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
 				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
@@ -443,7 +443,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
 				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
