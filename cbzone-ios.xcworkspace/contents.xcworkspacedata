@@ -5,7 +5,7 @@
       location = "container:../Documents/HelloGLKit-1/HelloGLKit.xcodeproj"
       name = "New Group">
       <FileRef
-         location = "container:../Documents/HelloGLKit-1/cbzone-ios.xcodeproj">
+         location = "container:../Documents/HelloGLKit-1/cbzone.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>

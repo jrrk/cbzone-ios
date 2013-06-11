@@ -56,14 +56,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3545468D1433C8990074AF72 /* cbzone-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cbzone-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3545468D1433C8990074AF72 /* cbzone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cbzone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		354546911433C8990074AF72 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		354546931433C8990074AF72 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		354546951433C8990074AF72 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		354546991433C8990074AF72 /* cbzone-ios-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cbzone-ios-Info.plist"; sourceTree = "<group>"; };
+		354546991433C8990074AF72 /* cbzone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "cbzone-Info.plist"; sourceTree = "<group>"; };
 		3545469B1433C8990074AF72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3545469D1433C8990074AF72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3545469F1433C8990074AF72 /* cbzone-ios-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cbzone-ios-Prefix.pch"; sourceTree = "<group>"; };
+		3545469F1433C8990074AF72 /* cbzone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cbzone-Prefix.pch"; sourceTree = "<group>"; };
 		354546A01433C8990074AF72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		354546A11433C8990074AF72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		354546AC1433CCE10074AF72 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -160,7 +160,7 @@
 		3545468E1433C8990074AF72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3545468D1433C8990074AF72 /* cbzone-ios.app */,
+				3545468D1433C8990074AF72 /* cbzone.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,10 +201,10 @@
 			children = (
 				6A8D31BC1732548100AC7B42 /* Default-Landscape@2x.png */,
 				6A8D314317270CA200AC7B42 /* Default-568h@2x.png */,
-				354546991433C8990074AF72 /* cbzone-ios-Info.plist */,
+				354546991433C8990074AF72 /* cbzone-Info.plist */,
 				3545469A1433C8990074AF72 /* InfoPlist.strings */,
 				3545469D1433C8990074AF72 /* main.m */,
-				3545469F1433C8990074AF72 /* cbzone-ios-Prefix.pch */,
+				3545469F1433C8990074AF72 /* cbzone-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -254,9 +254,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3545468C1433C8990074AF72 /* cbzone-ios */ = {
+		3545468C1433C8990074AF72 /* cbzone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 354546A51433C8990074AF72 /* Build configuration list for PBXNativeTarget "cbzone-ios" */;
+			buildConfigurationList = 354546A51433C8990074AF72 /* Build configuration list for PBXNativeTarget "cbzone" */;
 			buildPhases = (
 				354546891433C8990074AF72 /* Sources */,
 				3545468A1433C8990074AF72 /* Frameworks */,
@@ -266,9 +266,9 @@
 			);
 			dependencies = (
 			);
-			name = "cbzone-ios";
+			name = "cbzone";
 			productName = HelloGLKit;
-			productReference = 3545468D1433C8990074AF72 /* cbzone-ios.app */;
+			productReference = 3545468D1433C8990074AF72 /* cbzone.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -279,7 +279,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = 354546871433C8990074AF72 /* Build configuration list for PBXProject "cbzone-ios" */;
+			buildConfigurationList = 354546871433C8990074AF72 /* Build configuration list for PBXProject "cbzone" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -291,7 +291,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3545468C1433C8990074AF72 /* cbzone-ios */,
+				3545468C1433C8990074AF72 /* cbzone */,
 			);
 		};
 /* End PBXProject section */
@@ -428,10 +428,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
-				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
+				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-Prefix.pch";
+				INFOPLIST_FILE = "HelloGLKit/cbzone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PRODUCT_NAME = "cbzone-ios";
+				PRODUCT_NAME = "cbzone";
 				PROVISIONING_PROFILE = "57F90574-66C3-46AC-92A6-239C87425645";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -445,10 +445,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mr Jonathan Kimmitt (5AU5B5HJQX)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-ios-Prefix.pch";
-				INFOPLIST_FILE = "HelloGLKit/cbzone-ios-Info.plist";
+				GCC_PREFIX_HEADER = "HelloGLKit/cbzone-Prefix.pch";
+				INFOPLIST_FILE = "HelloGLKit/cbzone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PRODUCT_NAME = "cbzone-ios";
+				PRODUCT_NAME = "cbzone";
 				PROVISIONING_PROFILE = "57F90574-66C3-46AC-92A6-239C87425645";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -459,7 +459,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		354546871433C8990074AF72 /* Build configuration list for PBXProject "cbzone-ios" */ = {
+		354546871433C8990074AF72 /* Build configuration list for PBXProject "cbzone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				354546A31433C8990074AF72 /* Debug */,
@@ -468,7 +468,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		354546A51433C8990074AF72 /* Build configuration list for PBXNativeTarget "cbzone-ios" */ = {
+		354546A51433C8990074AF72 /* Build configuration list for PBXNativeTarget "cbzone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				354546A61433C8990074AF72 /* Debug */,

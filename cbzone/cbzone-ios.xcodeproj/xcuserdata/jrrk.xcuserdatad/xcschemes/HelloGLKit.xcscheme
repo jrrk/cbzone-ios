@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3545468C1433C8990074AF72"
-               BuildableName = "cbzone-ios.app"
-               BlueprintName = "cbzone-ios"
-               ReferencedContainer = "container:cbzone-ios.xcodeproj">
+               BuildableName = "cbzone.app"
+               BlueprintName = "cbzone"
+               ReferencedContainer = "container:cbzone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3545468C1433C8990074AF72"
-            BuildableName = "cbzone-ios.app"
-            BlueprintName = "cbzone-ios"
-            ReferencedContainer = "container:cbzone-ios.xcodeproj">
+            BuildableName = "cbzone.app"
+            BlueprintName = "cbzone"
+            ReferencedContainer = "container:cbzone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3545468C1433C8990074AF72"
-            BuildableName = "cbzone-ios.app"
-            BlueprintName = "cbzone-ios"
-            ReferencedContainer = "container:cbzone-ios.xcodeproj">
+            BuildableName = "cbzone.app"
+            BlueprintName = "cbzone"
+            ReferencedContainer = "container:cbzone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3545468C1433C8990074AF72"
-            BuildableName = "cbzone-ios.app"
-            BlueprintName = "cbzone-ios"
-            ReferencedContainer = "container:cbzone-ios.xcodeproj">
+            BuildableName = "cbzone.app"
+            BlueprintName = "cbzone"
+            ReferencedContainer = "container:cbzone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
