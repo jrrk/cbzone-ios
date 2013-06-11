@@ -61,7 +61,7 @@ extern GLuint _vertexBuffer;
 extern GLuint _indexBuffer;
 
 extern float _rotation;
-extern int exited;
+extern int exited, intro;
 extern char *TANKDIR;
 
 typedef enum {
@@ -91,6 +91,7 @@ void glSetup(CGRect bounds);
 void cbzone_main(int argc, const char* const argv[]);
 void cbzone_while(void);
 void staticscreen(void);
+void introscreen(void);
 void dumpGL(void);
 void mytouch(void);
 void myaccel(float acceleration_x, float acceleration_y);
@@ -104,4 +105,5 @@ void rot(float,float,float,float,float,float);
 void char_tab(int);
 void fcoord(float x0, float y0, float x1, float y1);
 void fline(float x0, float y0, float x1, float y1);
+void drawintro(void);
 #endif

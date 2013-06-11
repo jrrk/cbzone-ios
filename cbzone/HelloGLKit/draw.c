@@ -22,28 +22,27 @@ static struct {
 } rounds[maxRound];
 
 int exited = 0;
+int intro = 1;
 static int myround = 0;
 static jmp_buf unwind;
 
 void resetdraw(void)
 {
-#if 0
     if (opt->trails)
     {
         int mycnt = rounds[myround].cntDraw;
-        TexturedQuad *vectors = rounds[myround].vectors;
+        rgb_t *colorVertices = rounds[myround].colorVertex;
         for (int i = 0; i < mycnt; i++)
             {
-                float fade = (vectors[i].bl.colorVertex.red+vectors[i].bl.colorVertex.green+vectors[i].bl.colorVertex.blue)/3;
-                vectors[i].bl.colorVertex.red = fade;
-                vectors[i].bl.colorVertex.green = fade;
-                vectors[i].bl.colorVertex.blue = fade;
-                vectors[i].tr.colorVertex.red = fade;
-                vectors[i].tr.colorVertex.green = fade;
-                vectors[i].tr.colorVertex.blue = fade;
+                float fade = 2.0;
+                colorVertices[i].red /= fade;
+                colorVertices[i].green /= fade;
+                colorVertices[i].blue /= fade;
+                colorVertices[i].red2 /= fade;
+                colorVertices[i].green2 /= fade;
+                colorVertices[i].blue2 /= fade;
             }
     }
-#endif
     myround = (myround+1)%maxRound;
     rounds[myround].cntDraw = 0;
 }
@@ -57,7 +56,13 @@ up_gl_t updateGL(CGRect bounds, CGPoint center)
     ret.projectionMatrix = projectionMatrix;
     ret.modelviewMatrix = modelViewMatrix;
 
-    if (!exited)
+    if (intro)
+    {
+        resetdraw();
+        introscreen();
+        drawintro();
+    }
+    else if (!exited)
     {
         if (!setjmp(unwind))
         {
@@ -84,22 +89,6 @@ void drawFg(CGRect bounds, CGPoint center)
         int mycnt = rounds[myrnd].cntDraw;
         bl_tr_t *geomVertices = rounds[myrnd].geometryVertex;
         rgb_t *colorVertices = rounds[myround].colorVertex;
-#if 0
-        for (int i = 0; i < mycnt; i++)
-        {
-            rgb_t colorVertex = colorVertices[i];
-            bl_tr_t newQuad = geomVertices[i];
-        
-            glLineWidth(opt->linewidth);
-            glEnableVertexAttribArray(GLKVertexAttribPosition);
-            glEnableVertexAttribArray(GLKVertexAttribColor);
-        
-            glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, (void *) &newQuad);
-            glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, (void *) &colorVertex);
-        
-            glDrawArrays(GL_LINES, 0, 2);
-        }
-#else
             glLineWidth(opt->linewidth);
             glEnableVertexAttribArray(GLKVertexAttribPosition);
             glEnableVertexAttribArray(GLKVertexAttribColor);
@@ -108,7 +97,6 @@ void drawFg(CGRect bounds, CGPoint center)
             glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, (void *) colorVertices);
             
             glDrawArrays(GL_LINES, 0, 2*mycnt);
-#endif
     }
 }
 

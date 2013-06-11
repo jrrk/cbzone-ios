@@ -49,110 +49,146 @@ void screeninit()
   generalfont = gprloadfontfile(GENERALFONT);
   staticscreen();
 }
-
+
 void staticscreen()
 {
-  static int window[2][2] = {70, 75, 860, 350};
-  int pt[2], radius;
-  char text[40];
-  static short line[] = {58, 66, 66, 58, 56, 438, 68, 438, 938, 56,
-                           938, 68, 942, 442, 934, 434, 56, 472, 68, 472,
-                           934, 468, 942, 476, 58, 644, 66, 652, 932, 648,
-                           944, 648};
-  static short scan[] = {500, 495, 500, 500, 500, 625, 500, 620, 435, 560,
-                           440, 560, 565, 560, 560, 560};
-  static short scrn[] = {75, 64, 925, 64, 936, 75, 936, 425, 925, 436,
-                           75, 436, 64, 425, 64, 75, 75, 64};
-
-  gprsetclippingactive(False);
-  gprsettextbackgroundvalue(opt->cpi[COLOR_BG]);
-  gprsetdrawvalue(opt->cpi[COLOR_FG]);
-  gprsettextvalue(opt->cpi[COLOR_TEXT]);
-  drawrectangle(50, 50, 900, 400);      /* draw the outer top rectangle */
-  drawrectangle(53, 53, 894, 394);      /*          inner top           */
-  drawrectangle(50, 460, 900, 200);     /*          outer bottom        */
-  drawrectangle(53, 463, 894, 194);     /*          inner bottom        */
-  polyline(scrn, 9);                    /*       inner top frame        */
-  pt[0] = 62;
-  pt[1] = 62;
-  radius = 6;
-  gprcircle(pt, radius);                /* now let's draw some screws   */
-  pt[0] = 938;
-  gprcircle(pt, radius);
-  pt[1] = 438;
-  gprcircle(pt, radius);
-  pt[0] = 62;
-  gprcircle(pt, radius);
-  pt[0] = 62;
-  pt[1] = 472;
-  gprcircle(pt, radius);
-  pt[0] = 938;
-  gprcircle(pt, radius);
-  pt[1] = 648;
-  gprcircle(pt, radius);
-  pt[0] = 62;
-  gprcircle(pt, radius);
-  multiline(line, 8);                   /*        now the slots         */
-  pt[0] = 500;
-  pt[1] = 560;
-//  radius = 65;
-  radius = 80;
-  gprsetdrawvalue(opt->cpi[COLOR_SCANNER]);
-  gprcircle(pt, radius);                /*      radar screen            */
-//    radius = 64;
-  radius = 79;
-  gprcircle(pt, radius);
-  multiline(scan, 4);
-  pt[0] = 855;
-  pt[1] = 560;
-  radius = 80;
-  gprsetdrawvalue(opt->cpi[COLOR_JOYSTICK]);
-  gprcircle(pt, radius);                /*      joystick screen         */
-  radius = 79;
-  gprcircle(pt, radius);
+    static int window[2][2] = {70, 75, 860, 350};
+    int pt[2], radius;
+    char text[40];
+    static short line[] = {58, 66, 66, 58, 56, 438, 68, 438, 938, 56,
+        938, 68, 942, 442, 934, 434, 56, 472, 68, 472,
+        934, 468, 942, 476, 58, 644, 66, 652, 932, 648,
+        944, 648};
+    static short scan[] = {500, 495, 500, 500, 500, 625, 500, 620, 435, 560,
+        440, 560, 565, 560, 560, 560};
+    static short scrn[] = {75, 64, 925, 64, 936, 75, 936, 425, 925, 436,
+        75, 436, 64, 425, 64, 75, 75, 64};
+    
+    gprsetclippingactive(False);
+    gprsettextbackgroundvalue(opt->cpi[COLOR_BG]);
+    gprsetdrawvalue(opt->cpi[COLOR_FG]);
+    gprsettextvalue(opt->cpi[COLOR_TEXT]);
+    drawrectangle(50, 50, 900, 400);      /* draw the outer top rectangle */
+    drawrectangle(53, 53, 894, 394);      /*          inner top           */
+    drawrectangle(50, 460, 900, 200);     /*          outer bottom        */
+    drawrectangle(53, 463, 894, 194);     /*          inner bottom        */
+    polyline(scrn, 9);                    /*       inner top frame        */
+    pt[0] = 62;
+    pt[1] = 62;
+    radius = 6;
+    gprcircle(pt, radius);                /* now let's draw some screws   */
+    pt[0] = 938;
+    gprcircle(pt, radius);
+    pt[1] = 438;
+    gprcircle(pt, radius);
+    pt[0] = 62;
+    gprcircle(pt, radius);
+    pt[0] = 62;
+    pt[1] = 472;
+    gprcircle(pt, radius);
+    pt[0] = 938;
+    gprcircle(pt, radius);
+    pt[1] = 648;
+    gprcircle(pt, radius);
+    pt[0] = 62;
+    gprcircle(pt, radius);
+    multiline(line, 8);                   /*        now the slots         */
+    pt[0] = 500;
+    pt[1] = 560;
+    //  radius = 65;
+    radius = 80;
+    gprsetdrawvalue(opt->cpi[COLOR_SCANNER]);
+    gprcircle(pt, radius);                /*      radar screen            */
+    //    radius = 64;
+    radius = 79;
+    gprcircle(pt, radius);
+    multiline(scan, 4);
+    pt[0] = 855;
+    pt[1] = 560;
+    radius = 80;
+    gprsetdrawvalue(opt->cpi[COLOR_JOYSTICK]);
+    gprcircle(pt, radius);                /*      joystick screen         */
+    radius = 79;
+    gprcircle(pt, radius);
 #if 0
-  gprsetdrawvalue(opt->cpi[COLOR_TEXT]);
-  drawrectangle(590, 570, 55, 30);      /*      missile warning         */
-  drawrectangle(655, 570, 55, 30);      /*      lander warning          */
-  drawrectangle(590, 520, 120, 30);     /*         score box            */
+    gprsetdrawvalue(opt->cpi[COLOR_TEXT]);
+    drawrectangle(590, 570, 55, 30);      /*      missile warning         */
+    drawrectangle(655, 570, 55, 30);      /*      lander warning          */
+    drawrectangle(590, 520, 120, 30);     /*         score box            */
 #endif
-  gprsettextfont(titlefont);
-  strcpy(text, "Pugna Zona V2.0i");
-  printstring(50, 45, text, strlen(text), 1);
+    gprsettextfont(titlefont);
+    strcpy(text, "Pugna Zona V2.0i");
+    printstring(50, 45, text, strlen(text), 1);
 #if 0
-  gprsettextvalue(opt->cpi[COLOR_JOYSTICK]);
-  strcpy(text, "F");                    /* directions for the joystick  */
-  printstring(850, 503, text, 1, 1);
-  strcpy(text, "B");
-  printstring(850, 630, text, 1, 1);
-  strcpy(text, "R");
-  printstring(913, 570, text, 1, 1);
-  strcpy(text, "L");
-  printstring(785, 570, text, 1, 1);
-#endif
-#if 0
-  gprsettextvalue(opt->cpi[COLOR_TEXT]);
-  gprsettextfont(warningfont);
-  strcpy(text, "Missile");              /*      warning messages        */
-  printstring(595, 590, text, 7, 1);
-  gprsettextfont(controlfont);
-  strcpy(text, "Lander");
-  printstring(600, 590, text, 6, 1);
+    gprsettextvalue(opt->cpi[COLOR_JOYSTICK]);
+    strcpy(text, "F");                    /* directions for the joystick  */
+    printstring(850, 503, text, 1, 1);
+    strcpy(text, "B");
+    printstring(850, 630, text, 1, 1);
+    strcpy(text, "R");
+    printstring(913, 570, text, 1, 1);
+    strcpy(text, "L");
+    printstring(785, 570, text, 1, 1);
 #endif
 #if 0
-  strcpy(text, "H");                    /*      switch positions        */
-  printstring(920, 608, text, 1, 1);
-  strcpy(text, "L");
-  printstring(920, 642, text, 1, 1);
+    gprsettextvalue(opt->cpi[COLOR_TEXT]);
+    gprsettextfont(warningfont);
+    strcpy(text, "Missile");              /*      warning messages        */
+    printstring(595, 590, text, 7, 1);
+    gprsettextfont(controlfont);
+    strcpy(text, "Lander");
+    printstring(600, 590, text, 6, 1);
 #endif
-  gprsetclipwindow(window);             /* define the playing field     */
-  gprsettextfont(generalfont);
-  pt[0] = 500;
-  pt[1] = 355;
-  gprsetcursorposition(pt);
-  gprsetclippingactive(True);
+#if 0
+    strcpy(text, "H");                    /*      switch positions        */
+    printstring(920, 608, text, 1, 1);
+    strcpy(text, "L");
+    printstring(920, 642, text, 1, 1);
+#endif
+    gprsetclipwindow(window);             /* define the playing field     */
+    gprsettextfont(generalfont);
+    pt[0] = 500;
+    pt[1] = 355;
+    gprsetcursorposition(pt);
+    gprsetclippingactive(True);
 }
-
+
+void introscreen(void)
+{
+    gprsettextbackgroundvalue(opt->cpi[COLOR_BG]);
+    gprsetdrawvalue(opt->cpi[COLOR_FG]);
+    drawrectangle(50, 50, 900, 600);      /* draw the outer rectangle */
+}
+
+static writepos = 0;
+
+static void writeintro(char *str)
+{
+    printstring(75, writepos, str, strlen(str), 1.9);
+    writepos += 50;
+}
+
+void drawintro(void)
+{
+    writepos = 100;
+    gprsettextfont(generalfont);
+    gprsettextvalue(opt->cpi[COLOR_FG]);
+    writeintro("Pugna Zona (Combat Zone) V2.0i");
+    writeintro("Pan or Zoom gesture to preference");
+    gprsettextvalue(opt->cpi[COLOR_SCANNER]);
+    writeintro("Observe targets on green radar");
+    gprsettextvalue(opt->cpi[COLOR_FG]);
+    writeintro("Tilt device to set speed/direction");
+    gprsettextvalue(opt->cpi[COLOR_JOYSTICK]);
+    writeintro("Observe attitude on red screen");
+    gprsettextvalue(opt->cpi[COLOR_FG]);
+    writeintro("Press on screen to fire cannon");
+    gprsettextvalue(opt->cpi[COLOR_FG]);
+    writeintro("See Settings/cbZone for sound etc.");
+    gprsettextvalue(opt->cpi[COLOR_SCANNER]);
+    writeintro("Long press to begin ...");
+}
+
 void updatedisplay (missile, lander, score, numleft, sens, reset)
      Bool missile, lander, sens, reset;
      long score;  // Eric Fogelin made this long from int

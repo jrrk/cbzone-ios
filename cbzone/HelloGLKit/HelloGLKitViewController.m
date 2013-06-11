@@ -233,7 +233,7 @@ switch(InterfaceOrientation)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return intro ? YES : NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -298,7 +298,7 @@ switch(InterfaceOrientation)
 // this method moves a gesture recognizer's view's anchor point between the user's fingers
 - (void)adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+    if (intro && (gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
         UIView *piece = gestureRecognizer.view;
         CGPoint locationInView = [gestureRecognizer locationInView:piece];
         CGPoint locationInSuperview = [gestureRecognizer locationInView:piece.superview];
@@ -311,7 +311,7 @@ switch(InterfaceOrientation)
 // display a menu with a single item to allow the piece's transform to be reset
 - (void)showResetMenu:(UILongPressGestureRecognizer *)gestureRecognizer
 {
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+    if (intro && ([gestureRecognizer state] == UIGestureRecognizerStateBegan)) {
         UIMenuController *menuController = [UIMenuController sharedMenuController];
         UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:@"Reset" action:@selector(resetPiece:)];
         CGPoint location = [gestureRecognizer locationInView:[gestureRecognizer view]];
@@ -339,7 +339,7 @@ switch(InterfaceOrientation)
     
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    if (intro && ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged)) {
         CGPoint translation = [gestureRecognizer translationInView:[piece superview]];
         
         [piece setCenter:CGPointMake([piece center].x + translation.x, [piece center].y + translation.y)];
@@ -353,7 +353,7 @@ switch(InterfaceOrientation)
 {
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    if (intro && ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged)) {
 //        [gestureRecognizer view].transform = CGAffineTransformRotate([[gestureRecognizer view] transform], [gestureRecognizer rotation]);
         [gestureRecognizer setRotation:0];
     }
@@ -365,7 +365,7 @@ switch(InterfaceOrientation)
 {
     [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+    if (intro && ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged)) {
         [gestureRecognizer view].transform = CGAffineTransformScale([[gestureRecognizer view] transform], [gestureRecognizer scale], [gestureRecognizer scale]);
         [gestureRecognizer setScale:1];
     }
@@ -382,7 +382,7 @@ switch(InterfaceOrientation)
     // if either of the gesture recognizers is the long press, don't allow simultaneous recognition
     if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] || [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]])
     {
-        playsound(skill);
+        intro = 0;
         return NO;
     }
     
