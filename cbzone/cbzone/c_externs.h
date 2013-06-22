@@ -118,12 +118,18 @@ extern void gprsettextvalue(
         int /* index */
 #endif
 );
-extern void multiline(
+    extern void multiline(
 #if FunctionPrototypes
-        XSegment* /* segments */,
-        int /* number */
+                          XSegment* /* segments */,
+                          int /* number */
 #endif
-);
+                          );
+    extern void multiline2(
+#if FunctionPrototypes
+                          XSegment* /* segments */,
+                          int /* number */
+#endif
+                          );
 extern void polyline(
 #if FunctionPrototypes
         XPoint* /* points */,

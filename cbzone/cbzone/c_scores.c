@@ -47,7 +47,7 @@ static void p(s, output)                 /* print to the X screen */
      char* s;
      Bool output;
 {
-  printstring (x, y, s, strlen(s), 2);
+  printstring (x, y, s, strlen(s), 1.8);
   y += ydelta;
 }
 
@@ -127,7 +127,7 @@ long scores(score)
                                   if (score < 2000000) strcpy(player.name, "Deputy Tank Commander"); else
                                       if (score < 5000000) strcpy(player.name, "Tank Commander"); else
                                           if (score < 10000000) strcpy(player.name, "Combat Air Controller"); else
-                                              strcpy(player.name, "General");
+                                              strcpy(player.name, "Instructor");
 
     if (numscore < NUMHIGH || player.score > prev_score->score) {
       score_printed = True;

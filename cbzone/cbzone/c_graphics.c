@@ -216,10 +216,15 @@ void updatedisplay (missile, lander, score, numleft, sens, reset)
 //    printstring(595, 590, text, strlen(text), 1);
       printstring(100, 250, text, strlen(text), 5);
 
-      gprsettextvalue(opt->cpi[COLOR_TEXT]);
-      gprsettextfont(controlfont);
-      strcpy(text, lander ? "Lander" : "");
-      printstring(600, 590, text, strlen(text), 2);
+    gprsettextvalue(opt->cpi[COLOR_TEXT]);
+    gprsettextfont(controlfont);
+    strcpy(text, lander ? "Lander" : "");
+    printstring(600, 590, text, strlen(text), 2);
+    
+    gprsettextvalue(opt->cpi[COLOR_FG]);
+    gprsettextfont(controlfont);
+    sprintf(text,"Left %d",opt->numleft);
+    printstring(600, 500, text, strlen(text), 2);
 
     gprsettextvalue(opt->cpi[COLOR_TEXT]);
     gprsettextfont(generalfont);
@@ -351,7 +356,7 @@ void scanner(o)
   gprsetdrawvalue(opt->cpi[COLOR_BG]);
   multiline(scanline, 1);               /*       erase scan line       */
   if (ind)                              /* erase enemies, if necessary */
-    multiline(dot, ind);
+    multiline2(dot, ind);
   temp = ca;
   ca = ca * cda - sa * sda;
   sa = sa * cda + sda * temp;
@@ -372,7 +377,7 @@ void scanner(o)
       curdot += 2;
     }
   if (ind)
-    multiline(dot, ind);                /* draw enemies, if necessary  */
+    multiline2(dot, ind);                /* draw enemies, if necessary  */
   gprsetclippingactive(True);
 }
 

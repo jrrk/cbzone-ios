@@ -614,32 +614,44 @@ void polyline(points, number)
 }
 
 void multiline(segments, number)
-     XSegment *segments;
-     int number;
+XSegment *segments;
+int number;
 {
 #ifdef WIN32
 #ifndef WIN31
-  int i, j;
-  POINT pt[100];
-  DWORD polycnt[50];
-  for (i=0, j=0; i<number*2; segments++, i += 2, j++) {
-    pt[i].x = segments->x1;
-    pt[i].y = segments->y1;
-    pt[i+1].x = segments->x2;
-    pt[i+1].y = segments->y2;
-    polycnt[j] = 2;
-  }
-  PolyPolyline(hdc, pt, polycnt, number);
+    int i, j;
+    POINT pt[100];
+    DWORD polycnt[50];
+    for (i=0, j=0; i<number*2; segments++, i += 2, j++) {
+        pt[i].x = segments->x1;
+        pt[i].y = segments->y1;
+        pt[i+1].x = segments->x2;
+        pt[i+1].y = segments->y2;
+        polycnt[j] = 2;
+    }
+    PolyPolyline(hdc, pt, polycnt, number);
 #else
-  int i;
-  for (i=0; i<number; segments++, i++) {
-    MoveToEx( hdc, segments->x1, segments->y1, NULL );
-    LineTo( hdc, segments->x2, segments->y2 );
-  }
+    int i;
+    for (i=0; i<number; segments++, i++) {
+        MoveToEx( hdc, segments->x1, segments->y1, NULL );
+        LineTo( hdc, segments->x2, segments->y2 );
+    }
 #endif /WIN31
 #else //X11
-  XDrawSegments (d, w, DrawGC, segments, number);
+    XDrawSegments (d, w, DrawGC, segments, number);
 #endif //X11
+}
+
+void multiline2(segments, number)
+XSegment *segments;
+int number;
+{
+    int i;
+    for (i=0; i<number; segments++, i++) {
+        XDrawArc (d, w, DrawGC,
+                  (segments->x1+segments->x2)/2, (segments->y1+segments->y2)/2,
+                  4, 4, 0, 360*64);
+    }
 }
 
 void drawrectangle(x, y, width, height)

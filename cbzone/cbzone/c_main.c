@@ -712,7 +712,7 @@ void cbzone_while(void)
             drawcracks();
       if (deadcount > 50) {
         dead = False;
-        if (!opt->training && (opt->numleft-- < 0)) {
+        if (!opt->training && (--opt->numleft < 0)) {
 #ifdef DEVELOPER
           gettimeofday(&game_end, 0);
           if (opt->output)
