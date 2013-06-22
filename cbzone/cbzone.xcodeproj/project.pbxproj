@@ -123,7 +123,6 @@
 		6AAFF30517686CC400FFB88B /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		6AAFF30717686CD000FFB88B /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		6AAFF3091768708500FFB88B /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		6AFD625317679AF1000C0E1D /* cbzone-ios copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cbzone-ios copy-Info.plist"; path = "/Users/jrrk/Documents/cbzone-ios/cbzone/cbzone-ios copy-Info.plist"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +165,6 @@
 				354546971433C8990074AF72 /* HelloGLKit */,
 				354546901433C8990074AF72 /* Frameworks */,
 				3545468E1433C8990074AF72 /* Products */,
-				6AFD625317679AF1000C0E1D /* cbzone-ios copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
