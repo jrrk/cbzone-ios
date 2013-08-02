@@ -20,6 +20,7 @@ typedef struct {
   int mlanders;
   int mmissiles;
   int msalvos;
+  int mytanks;
   int mtanks;
   int menemies;
   int mobjects;
@@ -40,6 +41,7 @@ typedef struct {
   Bool cursor;
   Bool training;
   Bool trails;
+  float hypersensitivity;
     
   /* Now pick up the color options...pick up the color as a string first */
   /* This will later be a pixel value after we set up the colormap */

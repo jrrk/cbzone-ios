@@ -8,7 +8,6 @@
 
 #import "HelloGLKitViewController.h"
 #include "draw.h"
-//#include "missing.h"
 #include "c_includes.h"
 
 char *TANKDIR;
@@ -139,6 +138,24 @@ switch(InterfaceOrientation)
     }
 }
 
+void loadDefaults(void)
+{
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    opt->copters = [standardDefaults boolForKey:@"copters_preference"];
+    opt->silent = [standardDefaults boolForKey:@"silent_preference"];
+    opt->loud = [standardDefaults boolForKey:@"loud_preference"];
+    opt->trails = [standardDefaults boolForKey:@"trails_preference"];
+    opt->training = [standardDefaults boolForKey:@"practice_preference"];
+    opt->mytanks = [standardDefaults integerForKey:@"ownTanks"];
+    opt->mtanks = [standardDefaults integerForKey:@"enemyTanks"];
+    opt->mlanders = [standardDefaults integerForKey:@"enemyLanders"];
+    opt->mmissiles = [standardDefaults integerForKey:@"enemyMissiles"];;
+    opt->mblocks = [standardDefaults integerForKey:@"blocks"];
+    opt->linewidth = [standardDefaults integerForKey:@"lineWidth"];
+    opt->hypersensitivity = [standardDefaults floatForKey:@"hypersensitivity"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -149,8 +166,6 @@ switch(InterfaceOrientation)
 
     TANKDIR = strdup([[path stringByAppendingString:@"/"] UTF8String] );
 
-    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
-    
     opt->delay = 5;
     opt->msalvos = -1;
     opt->menemies = 0;
@@ -165,17 +180,10 @@ switch(InterfaceOrientation)
     opt->help = 0;
     opt->original = 0;
     opt->cursor = 0;
-    opt->copters = [standardDefaults boolForKey:@"copters_preference"];
-    opt->silent = [standardDefaults boolForKey:@"silent_preference"];
-    opt->loud = [standardDefaults boolForKey:@"loud_preference"];
-    opt->trails = [standardDefaults boolForKey:@"trails_preference"];
-    opt->training = [standardDefaults boolForKey:@"practice_preference"];
-    opt->numleft = [standardDefaults integerForKey:@"ownTanks"];
-    opt->mtanks = [standardDefaults integerForKey:@"enemyTanks"];
-    opt->mlanders = [standardDefaults integerForKey:@"enemyLanders"];
-    opt->mmissiles = [standardDefaults integerForKey:@"enemyMissiles"];;
-    opt->mblocks = [standardDefaults integerForKey:@"blocks"];
-    opt->linewidth = [standardDefaults integerForKey:@"lineWidth"];
+    
+    loadDefaults();
+    
+    opt->numleft = opt->mytanks;
     
     sound("enemy_seen2", senemy_seen);
     sound("fire", sfire);

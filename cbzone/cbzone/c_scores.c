@@ -79,13 +79,14 @@ long scores(score)
     top_score = (struct score_struct*) malloc(sizeof(struct score_struct));
     current = top_score;
     
-  sprintf(buf,"%s%s_%d_%d_%d_%d_%d_%d",TANKDIR,SCOREFILE,
+  sprintf(buf,"%s%s_%d_%d_%d_%d_%d_%d_%d",TANKDIR,SCOREFILE,
     opt->mmissiles,
+        opt->mytanks,
         opt->mtanks,
         opt->mlanders,
         opt->mblocks,
         opt->delay,
-          opt->msalvos);
+        opt->msalvos);
   sfile = fopen(buf,"r+");       /* just check if it is there */
 
   if (sfile == NULL)

@@ -222,6 +222,26 @@
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Hypersensitivity</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSSliderSpecifier</string>
+			<key>MinimumValue</key>
+			<real>0.1</real>
+			<key>MaximumValue</key>
+			<integer>1</integer>
+			<key>Title</key>
+			<string>Hypersensitivity</string>
+			<key>Key</key>
+			<string>hypersensitivity</string>
+			<key>DefaultValue</key>
+			<real>0.5</real>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

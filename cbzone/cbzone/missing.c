@@ -296,6 +296,11 @@ void rot(float r11,float r12,float r21,float r22, float ox, float oy)
     offy = oy;
 }
 
+static double turbo(double x)
+{
+    return opt->hypersensitivity > 0.1 ? exp(x*opt->hypersensitivity) : min(1, x);
+}
+
 void myaccel(float acceleration_x, float acceleration_y)
 {
 	static CGPoint levelPosition;
@@ -303,7 +308,7 @@ void myaccel(float acceleration_x, float acceleration_y)
 	static float tiltMagnitude;
 	
 	tiltDirection = atan2(acceleration_y, acceleration_x);
-	tiltMagnitude = min(1, sqrt( acceleration_x*acceleration_x+acceleration_y*acceleration_y));
+	tiltMagnitude = turbo( acceleration_x*acceleration_x+acceleration_y*acceleration_y);
 	levelPosition.y = sin(tiltDirection)*tiltMagnitude;
 	levelPosition.x = -cos(tiltDirection)*tiltMagnitude;
 
